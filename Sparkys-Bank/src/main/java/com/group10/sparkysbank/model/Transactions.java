@@ -1,8 +1,5 @@
-package com.group10.sparkysbank.model;
-
-
 // default package
-// Generated Oct 25, 2014 12:37:09 PM by Hibernate Tools 3.4.0.CR1
+// Generated Oct 25, 2014 2:16:00 PM by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,6 +17,7 @@ import javax.persistence.Table;
 public class Transactions implements java.io.Serializable {
 
 	private int idtransactions;
+	private TransactionTypes transactionTypes;
 	private Integer amtInvolved;
 	private String toAccountno;
 	private Integer status;
@@ -33,9 +31,11 @@ public class Transactions implements java.io.Serializable {
 		this.idtransactions = idtransactions;
 	}
 
-	public Transactions(int idtransactions, Integer amtInvolved, String toAccountno,
+	public Transactions(int idtransactions, TransactionTypes transactionTypes,
+			Integer amtInvolved, String toAccountno,
 			Integer status, Integer approvalNeeded, Integer approved) {
 		this.idtransactions = idtransactions;
+		this.transactionTypes = transactionTypes;
 		this.amtInvolved = amtInvolved;
 		this.toAccountno = toAccountno;
 		this.status = status;
@@ -53,7 +53,16 @@ public class Transactions implements java.io.Serializable {
 		this.idtransactions = idtransactions;
 	}
 
-	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "trans_type")
+	public TransactionTypes getTransactionTypes() {
+		return this.transactionTypes;
+	}
+
+	public void setTransactionTypes(TransactionTypes transactionTypes) {
+		this.transactionTypes = transactionTypes;
+	}
+
 	
 	@Column(name = "amt_involved")
 	public Integer getAmtInvolved() {
