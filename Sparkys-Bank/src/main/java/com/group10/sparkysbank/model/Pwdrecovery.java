@@ -1,8 +1,7 @@
 package com.group10.sparkysbank.model;
 
-
 // default package
-// Generated Oct 25, 2014 12:37:09 PM by Hibernate Tools 3.4.0.CR1
+// Generated Oct 26, 2014 3:30:18 PM by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

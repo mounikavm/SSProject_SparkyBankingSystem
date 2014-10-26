@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.group10.sparkysbank.dao.UserDao;
-import com.group10.sparkysbank.model.User;
+import com.group10.sparkysbank.model.Userinfo;
 import com.group10.sparkysbank.service.UserService;
 import com.group10.sparkysbank.service.UserServiceImpl;
 
@@ -26,10 +26,10 @@ public class LoginController {
 	
 	
 	@RequestMapping(value="/userLogin", method=RequestMethod.POST)
-	public String loginPage(@ModelAttribute("users") User user,BindingResult bindingResult, HttpServletRequest request, ModelMap model)
+	public String loginPage(@ModelAttribute("users") Userinfo user,BindingResult bindingResult, HttpServletRequest request, ModelMap model)
 	{
 		//userService= new UserServiceImpl();
-		System.out.println("mounika"+user.getUserId());
+		System.out.println("mounika"+user.getIduserinfo());
 		userService.registerUser(user);
 		return "hello";
 	}
@@ -38,7 +38,7 @@ public class LoginController {
 
     public String login(Model model) {
 		
-		model.addAttribute("users",new User());
+		model.addAttribute("users",new Userinfo());
 		System.out.println("mounika1");
 
           return "userLogin";

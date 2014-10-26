@@ -1,8 +1,7 @@
 package com.group10.sparkysbank.model;
 
-
 // default package
-// Generated Oct 25, 2014 12:37:09 PM by Hibernate Tools 3.4.0.CR1
+// Generated Oct 26, 2014 3:30:18 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,7 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
@@ -21,7 +20,6 @@ import javax.persistence.Table;
 public class Roles implements java.io.Serializable {
 
 	private String type;
-	
 
 	public Roles() {
 	}
@@ -30,7 +28,6 @@ public class Roles implements java.io.Serializable {
 		this.type = type;
 	}
 
-	
 	@Id
 	@Column(name = "type", unique = true, nullable = false, length = 45)
 	public String getType() {
@@ -41,5 +38,4 @@ public class Roles implements java.io.Serializable {
 		this.type = type;
 	}
 
-	
 }

@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.group10.sparkysbank.model.User;
+import com.group10.sparkysbank.model.Userinfo;
 
 @Repository("userDao")
 public class UserDaoImpl implements UserDao{
@@ -28,7 +28,7 @@ public class UserDaoImpl implements UserDao{
 
 
 	@Transactional
-	public void registerUser(User user) {
+	public void registerUser(Userinfo user) {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
 		//session.beginTransaction();

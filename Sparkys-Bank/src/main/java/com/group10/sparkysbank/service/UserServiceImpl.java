@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.group10.sparkysbank.model.User;
+import com.group10.sparkysbank.model.Userinfo;
 import com.group10.sparkysbank.dao.UserDao;
 import com.group10.sparkysbank.dao.UserDaoImpl;
 
@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Transactional
-	public void registerUser(User user) {
+	public void registerUser(Userinfo user) {
 		
 		// TODO Auto-generated method stub
 		userDao.registerUser(user);

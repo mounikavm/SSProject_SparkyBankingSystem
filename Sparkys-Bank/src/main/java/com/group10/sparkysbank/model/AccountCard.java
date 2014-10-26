@@ -1,9 +1,4 @@
 package com.group10.sparkysbank.model;
-
-
-// default package
-// Generated Oct 25, 2014 12:37:09 PM by Hibernate Tools 3.4.0.CR1
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -32,7 +27,8 @@ public class AccountCard implements java.io.Serializable {
 		this.idaccountCard = idaccountCard;
 	}
 
-	public AccountCard(int idaccountCard,String cardno, String cvv, String expiryMonth, String expiryYear) {
+	public AccountCard(int idaccountCard,
+			String cardno, String cvv, String expiryMonth, String expiryYear) {
 		this.idaccountCard = idaccountCard;
 		this.cardno = cardno;
 		this.cvv = cvv;
@@ -50,7 +46,6 @@ public class AccountCard implements java.io.Serializable {
 		this.idaccountCard = idaccountCard;
 	}
 
-	
 	@Column(name = "cardno", length = 45)
 	public String getCardno() {
 		return this.cardno;

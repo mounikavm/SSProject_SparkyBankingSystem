@@ -1,7 +1,7 @@
 package com.group10.sparkysbank.dao;
 
-import com.group10.sparkysbank.model.User;
+import com.group10.sparkysbank.model.Userinfo;
 
 public interface UserDao {
-	public void registerUser(User user);
+	public void registerUser(Userinfo user);
 }

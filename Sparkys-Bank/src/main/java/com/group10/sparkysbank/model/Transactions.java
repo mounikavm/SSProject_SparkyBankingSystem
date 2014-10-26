@@ -1,5 +1,7 @@
+package com.group10.sparkysbank.model;
+
 // default package
-// Generated Oct 25, 2014 2:16:00 PM by Hibernate Tools 3.4.0.CR1
+// Generated Oct 26, 2014 3:30:18 PM by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,9 +22,10 @@ public class Transactions implements java.io.Serializable {
 	private TransactionTypes transactionTypes;
 	private Integer amtInvolved;
 	private String toAccountno;
-	private Integer status;
+	private String creditDebit;
 	private Integer approvalNeeded;
 	private Integer approved;
+	private Integer status;
 
 	public Transactions() {
 	}
@@ -32,15 +35,17 @@ public class Transactions implements java.io.Serializable {
 	}
 
 	public Transactions(int idtransactions, TransactionTypes transactionTypes,
-			Integer amtInvolved, String toAccountno,
-			Integer status, Integer approvalNeeded, Integer approved) {
+		 Integer amtInvolved, String toAccountno,
+			String creditDebit, Integer approvalNeeded, Integer approved,
+			Integer status) {
 		this.idtransactions = idtransactions;
 		this.transactionTypes = transactionTypes;
 		this.amtInvolved = amtInvolved;
 		this.toAccountno = toAccountno;
-		this.status = status;
+		this.creditDebit = creditDebit;
 		this.approvalNeeded = approvalNeeded;
 		this.approved = approved;
+		this.status = status;
 	}
 
 	@Id
@@ -63,7 +68,6 @@ public class Transactions implements java.io.Serializable {
 		this.transactionTypes = transactionTypes;
 	}
 
-	
 	@Column(name = "amt_involved")
 	public Integer getAmtInvolved() {
 		return this.amtInvolved;
@@ -82,13 +86,13 @@ public class Transactions implements java.io.Serializable {
 		this.toAccountno = toAccountno;
 	}
 
-	@Column(name = "status")
-	public Integer getStatus() {
-		return this.status;
+	@Column(name = "credit_debit", length = 45)
+	public String getCreditDebit() {
+		return this.creditDebit;
 	}
 
-	public void setStatus(Integer status) {
-		this.status = status;
+	public void setCreditDebit(String creditDebit) {
+		this.creditDebit = creditDebit;
 	}
 
 	@Column(name = "approval_needed")
@@ -107,6 +111,15 @@ public class Transactions implements java.io.Serializable {
 
 	public void setApproved(Integer approved) {
 		this.approved = approved;
+	}
+
+	@Column(name = "status")
+	public Integer getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 }
