@@ -2,7 +2,7 @@ package com.group10.sparkysbank.model;
 
 
 // default package
-// Generated Oct 25, 2014 12:37:09 PM by Hibernate Tools 3.4.0.CR1
+// Generated Oct 26, 2014 3:05:06 AM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -26,10 +26,14 @@ import javax.persistence.TemporalType;
 public class Useraccounts implements java.io.Serializable {
 
 	private String accountno;
+	private Userinfo userinfo;
 	private String routingno;
 	private String wiringno;
 	private Date accountopendate;
-	
+	private Integer balance;
+	private Set<AccountCard> accountCards = new HashSet<AccountCard>(0);
+	private Set<Transactions> transactionses = new HashSet<Transactions>(0);
+
 	public Useraccounts() {
 	}
 
@@ -37,13 +41,17 @@ public class Useraccounts implements java.io.Serializable {
 		this.accountno = accountno;
 	}
 
-	public Useraccounts(String accountno, String routingno,
-			String wiringno, Date accountopendate) {
+	public Useraccounts(String accountno, Userinfo userinfo, String routingno,
+			String wiringno, Date accountopendate, Integer balance,
+			Set<AccountCard> accountCards, Set<Transactions> transactionses) {
 		this.accountno = accountno;
+		this.userinfo = userinfo;
 		this.routingno = routingno;
 		this.wiringno = wiringno;
 		this.accountopendate = accountopendate;
-		
+		this.balance = balance;
+		this.accountCards = accountCards;
+		this.transactionses = transactionses;
 	}
 
 	@Id
@@ -56,6 +64,15 @@ public class Useraccounts implements java.io.Serializable {
 		this.accountno = accountno;
 	}
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "iduserinfo")
+	public Userinfo getUserinfo() {
+		return this.userinfo;
+	}
+
+	public void setUserinfo(Userinfo userinfo) {
+		this.userinfo = userinfo;
+	}
 
 	@Column(name = "routingno", length = 45)
 	public String getRoutingno() {
@@ -85,5 +102,31 @@ public class Useraccounts implements java.io.Serializable {
 		this.accountopendate = accountopendate;
 	}
 
+	@Column(name = "balance")
+	public Integer getBalance() {
+		return this.balance;
+	}
+
+	public void setBalance(Integer balance) {
+		this.balance = balance;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "useraccounts")
+	public Set<AccountCard> getAccountCards() {
+		return this.accountCards;
+	}
+
+	public void setAccountCards(Set<AccountCard> accountCards) {
+		this.accountCards = accountCards;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "useraccounts")
+	public Set<Transactions> getTransactionses() {
+		return this.transactionses;
+	}
+
+	public void setTransactionses(Set<Transactions> transactionses) {
+		this.transactionses = transactionses;
+	}
 
 }

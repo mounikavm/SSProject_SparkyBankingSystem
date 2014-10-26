@@ -2,7 +2,7 @@ package com.group10.sparkysbank.model;
 
 
 // default package
-// Generated Oct 25, 2014 12:37:09 PM by Hibernate Tools 3.4.0.CR1
+// Generated Oct 26, 2014 3:05:06 AM by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,6 +20,7 @@ import javax.persistence.Table;
 public class Pwdrecovery implements java.io.Serializable {
 
 	private int idpwdrecovery;
+	private Userinfo userinfo;
 	private String question1;
 	private String ans1;
 	private String question2;
@@ -32,9 +33,10 @@ public class Pwdrecovery implements java.io.Serializable {
 		this.idpwdrecovery = idpwdrecovery;
 	}
 
-	public Pwdrecovery(int idpwdrecovery, String question1,
+	public Pwdrecovery(int idpwdrecovery, Userinfo userinfo, String question1,
 			String ans1, String question2, String ans2) {
 		this.idpwdrecovery = idpwdrecovery;
+		this.userinfo = userinfo;
 		this.question1 = question1;
 		this.ans1 = ans1;
 		this.question2 = question2;
@@ -51,6 +53,15 @@ public class Pwdrecovery implements java.io.Serializable {
 		this.idpwdrecovery = idpwdrecovery;
 	}
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "iduserinfo")
+	public Userinfo getUserinfo() {
+		return this.userinfo;
+	}
+
+	public void setUserinfo(Userinfo userinfo) {
+		this.userinfo = userinfo;
+	}
 
 	@Column(name = "question1")
 	public String getQuestion1() {

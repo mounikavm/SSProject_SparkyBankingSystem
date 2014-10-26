@@ -2,7 +2,7 @@ package com.group10.sparkysbank.model;
 
 
 // default package
-// Generated Oct 25, 2014 12:37:09 PM by Hibernate Tools 3.4.0.CR1
+// Generated Oct 26, 2014 3:05:06 AM by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,6 +20,7 @@ import javax.persistence.Table;
 public class AccountCard implements java.io.Serializable {
 
 	private int idaccountCard;
+	private Useraccounts useraccounts;
 	private String cardno;
 	private String cvv;
 	private String expiryMonth;
@@ -32,8 +33,10 @@ public class AccountCard implements java.io.Serializable {
 		this.idaccountCard = idaccountCard;
 	}
 
-	public AccountCard(int idaccountCard,String cardno, String cvv, String expiryMonth, String expiryYear) {
+	public AccountCard(int idaccountCard, Useraccounts useraccounts,
+			String cardno, String cvv, String expiryMonth, String expiryYear) {
 		this.idaccountCard = idaccountCard;
+		this.useraccounts = useraccounts;
 		this.cardno = cardno;
 		this.cvv = cvv;
 		this.expiryMonth = expiryMonth;
@@ -50,7 +53,16 @@ public class AccountCard implements java.io.Serializable {
 		this.idaccountCard = idaccountCard;
 	}
 
-	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "accountno")
+	public Useraccounts getUseraccounts() {
+		return this.useraccounts;
+	}
+
+	public void setUseraccounts(Useraccounts useraccounts) {
+		this.useraccounts = useraccounts;
+	}
+
 	@Column(name = "cardno", length = 45)
 	public String getCardno() {
 		return this.cardno;
