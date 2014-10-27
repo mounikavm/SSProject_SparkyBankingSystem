@@ -17,10 +17,16 @@ public class LoginController {
 		return "userLogin";
 	}
 	
-	@RequestMapping(value="/",method=RequestMethod.GET)
+	@RequestMapping(value="/hello",method=RequestMethod.GET)
 	public String home(Model model)
 	{
-		return "index";
+		return "hello";
+	}
+	
+	@RequestMapping(value="/logout",method=RequestMethod.GET)
+	public String logout(ModelMap model)
+	{
+		return "userLogin";
 	}
 	
 	

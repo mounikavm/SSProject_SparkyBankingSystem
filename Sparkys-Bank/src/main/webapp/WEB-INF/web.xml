@@ -4,9 +4,9 @@ xmlns="http://java.sun.com/xml/ns/javaee"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
-<!-- 	<welcome-file-list> -->
-<!-- 	<welcome-file>/WEB-INF/jsps/index.jsp</welcome-file> -->
-<!-- 	</welcome-file-list> -->
+	<welcome-file-list>
+	<welcome-file>/WEB-INF/jsps/userLogin.jsp</welcome-file>
+	</welcome-file-list>
 
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>

@@ -9,8 +9,9 @@
 
 	<http auto-config="true">
 		<intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-		
-		<form-login login-page="/login" default-target-url="/"/>
+		<intercept-url pattern="/logout" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<form-login login-page="/login" default-target-url="/hello"/>
+		<logout logout-success-url="/logout"/>
 	</http>
 
 	<authentication-manager>
