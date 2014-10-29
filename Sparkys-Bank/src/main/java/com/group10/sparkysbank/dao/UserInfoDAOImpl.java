@@ -24,4 +24,10 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 		return user;
 	}
 
+	public void registerNewUserAccount(Userinfo userInfo) {
+		Session session=sessionFactory.getCurrentSession();
+		session.save(userInfo);
+		
+	}
+
 }

@@ -21,7 +21,7 @@ public class LoginController {
 	@RequestMapping(value="/hello",method=RequestMethod.GET)
 	public String home(Model model)
 	{
-		return "hello";
+		return "home";
 	}
 	
 	@RequestMapping(value="/logout",method=RequestMethod.GET)
@@ -30,5 +30,16 @@ public class LoginController {
 		return "userLogin";
 	}
 	
+	@RequestMapping(value="/loginFailed", method=RequestMethod.GET)
+	public String loginFailed(ModelMap model)
+	{
+		model.addAttribute("error", "true");
+		return "userLogin";
+	}
 	
+	@RequestMapping(value="/403", method=RequestMethod.GET)
+	public String ifNotAuthorized(ModelMap model)
+	{
+		return "403";
+	}
 }

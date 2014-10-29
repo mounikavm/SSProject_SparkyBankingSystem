@@ -6,11 +6,11 @@
 <html>
 <head>
 
-<link href="<c:url value="/resources/css/theme.css"/>"
-	rel="stylesheet">
+<link href="<c:url value="/resources/css/theme.css"/>" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 
-<script type="text/javascript" src="<c:url value="/resources/js/bootstrap.js"/>"></script>
+<script type="text/javascript"
+	src="<c:url value="/resources/js/bootstrap.js"/>"></script>
 <!-- <script -->
 <!-- 	src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
 <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
@@ -24,10 +24,20 @@
 
 	</div>
 
+	<c:if test="${not empty error }">
+	<div style="width: 30%;">
+		<div class="alert alert-dismissable alert-danger">
+			<strong>Your Login attempt was unsuccessful.</br> 
+			
+			</strong>
+		</div>
+		
+	</div>
+	</c:if>
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<form:form action="j_spring_security_check" class="form-horizontal"
-				method="post" commandName="users" modelAttribute="users" name="f">
+				method="post"  name="f">
 				<fieldset>
 					<legend>Login</legend>
 

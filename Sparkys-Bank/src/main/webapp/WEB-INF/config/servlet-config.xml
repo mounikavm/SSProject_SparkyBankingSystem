@@ -60,8 +60,11 @@
 		<property name="sessionFactory" ref="sessionFactory"></property>
 
 	</bean>
-	
-
+	<bean id="userValidator" class="com.group10.sparkysbank.validator.UserValidator"/>
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="classpath:message"></property>
+		<property name="defaultEncoding" value="UTF-8"></property>
+	</bean>
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/jsps/" />

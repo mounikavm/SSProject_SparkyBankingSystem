@@ -7,13 +7,25 @@
 		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
 
-	<http auto-config="true">
-		<intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-		<intercept-url pattern="/logout" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-		<form-login login-page="/login" default-target-url="/hello"/>
+	<http use-expressions="true">
+		<intercept-url pattern="/resources/**" access="permitAll"/>
+		<intercept-url pattern="/logout" access="permitAll"/>
+		<intercept-url pattern="/login" access="permitAll"/>
+		<intercept-url pattern="/loginFailed" access="permitAll"/>
+		<intercept-url pattern="/int**" access="hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')"/>
+		<intercept-url pattern="/register" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/addExtUser" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/hello" access="permitAll"/>
+		<intercept-url pattern="/403" access="permitAll" />
+		<intercept-url pattern="/**" access="denyAll" />
+		<form-login login-page="/login" default-target-url="/hello" authentication-failure-url="/loginFailed" authentication-success-handler-ref="roleBasedControl"/>
+		<access-denied-handler error-page="/403"/>
 		<logout logout-success-url="/logout"/>
 	</http>
 
+	<beans:bean id="roleBasedControl" class="com.group10.sparkysbank.service.RoleBasedSecurityService">
+		
+	</beans:bean>
 	<authentication-manager>
 		<authentication-provider user-service-ref="loginService">
 		<password-encoder hash="md5"/>
