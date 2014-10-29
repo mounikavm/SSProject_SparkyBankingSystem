@@ -49,14 +49,13 @@ public class Userinfo implements java.io.Serializable {
 	private String username;
 	@Pattern(regexp="^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$")
 	private String password;
-	@NotNull @Past 	@DateTimeFormat(pattern="YYYY-MM-DD")
+
 	private Date dob;
 	@NotEmpty
 	private String address;
-	@NotEmpty
+
 	private String identificationid;
-	@DateTimeFormat(pattern="YYYY-MM-DD")
-	@NotNull @Future
+	
 	private Date expirydate;
 	private Set<Pwdrecovery> pwdrecoveries = new HashSet<Pwdrecovery>(0);
 	private Set<Roles> roleses = new HashSet<Roles>(0);

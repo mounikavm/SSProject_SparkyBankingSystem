@@ -25,7 +25,7 @@ import javax.persistence.TemporalType;
 @Table(name = "useraccounts", catalog = "sparkysbankdb")
 public class Useraccounts implements java.io.Serializable {
 
-	private String accountno;
+	private int accountno;
 	private Userinfo userinfo;
 	private String routingno;
 	private String wiringno;
@@ -37,11 +37,11 @@ public class Useraccounts implements java.io.Serializable {
 	public Useraccounts() {
 	}
 
-	public Useraccounts(String accountno) {
+	public Useraccounts(int accountno) {
 		this.accountno = accountno;
 	}
 
-	public Useraccounts(String accountno, Userinfo userinfo, String routingno,
+	public Useraccounts(int accountno, Userinfo userinfo, String routingno,
 			String wiringno, Date accountopendate, Integer balance,
 			Set<AccountCard> accountCards, Set<Transactions> transactionses) {
 		this.accountno = accountno;
@@ -56,11 +56,11 @@ public class Useraccounts implements java.io.Serializable {
 
 	@Id
 	@Column(name = "accountno", unique = true, nullable = false, length = 50)
-	public String getAccountno() {
+	public int getAccountno() {
 		return this.accountno;
 	}
 
-	public void setAccountno(String accountno) {
+	public void setAccountno(int accountno) {
 		this.accountno = accountno;
 	}
 
