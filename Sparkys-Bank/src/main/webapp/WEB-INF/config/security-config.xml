@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+z<?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:p="http://www.springframework.org/schema/p" xmlns="http://www.springframework.org/schema/security"
@@ -14,11 +14,12 @@
 		<intercept-url pattern="/loginFailed" access="permitAll"/>
 		<intercept-url pattern="/int**" access="hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')"/>
 		<intercept-url pattern="/register" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/extHome" access="hasRole('ROLE_MERCHANT')"/>
 		<intercept-url pattern="/addExtUser" access="hasRole('ROLE_ADMIN')"/>
 		<intercept-url pattern="/hello" access="permitAll"/>
 		<intercept-url pattern="/403" access="permitAll" />
 		<intercept-url pattern="/**" access="denyAll" />
-		<form-login login-page="/login" default-target-url="/hello" authentication-failure-url="/loginFailed" authentication-success-handler-ref="roleBasedControl"/>
+		<form-login login-page="/login" authentication-failure-url="/loginFailed" authentication-success-handler-ref="roleBasedControl"/>
 		<access-denied-handler error-page="/403"/>
 		<logout logout-success-url="/logout"/>
 	</http>

@@ -12,7 +12,7 @@ public class PasswordTester extends TestCase {
 	public void testPasswordGenerator()
 	{
 		Md5PasswordEncoder encoder=new Md5PasswordEncoder();
-		String password=encoder.encodePassword("secret", null);
+		String password=encoder.encodePassword("mohit", null);
 		System.out.println(password);
 	}
 	

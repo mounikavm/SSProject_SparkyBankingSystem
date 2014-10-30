@@ -34,6 +34,11 @@ public class RoleBasedSecurityService implements AuthenticationSuccessHandler{
 				{
 					redirect.sendRedirect(request, response, "/intHome");
 				}
+				
+				if(auth.getAuthority().equals("ROLE_MERCHANT"))
+				{
+					redirect.sendRedirect(request,response, "/extHome");
+				}
 			}
 		}
 		
