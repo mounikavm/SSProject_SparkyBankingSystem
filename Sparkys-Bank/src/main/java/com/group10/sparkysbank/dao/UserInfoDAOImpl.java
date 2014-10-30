@@ -7,6 +7,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.group10.sparkysbank.model.Useraccounts;
 import com.group10.sparkysbank.model.Userinfo;
 
 @Repository(value="userInfoDAO")
@@ -24,10 +25,15 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 		return user;
 	}
 
-	public void registerNewUserAccount(Userinfo userInfo) {
+	public int registerNewUserAccount(Userinfo userInfo, Useraccounts account) {
 		Session session=sessionFactory.getCurrentSession();
+	//	session.beginTransaction();
 		session.save(userInfo);
-		
+		session.save(account);
+		Criteria criteria=session.createCriteria(Useraccounts.class);
+		criteria.add(Restrictions.eq("userinfo",userInfo));
+		Useraccounts acc=(Useraccounts)criteria.uniqueResult();
+		return acc.getAccountno();
 	}
 
 }

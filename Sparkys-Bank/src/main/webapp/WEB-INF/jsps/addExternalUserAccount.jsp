@@ -16,80 +16,91 @@
 <title>Register</title>
 </head>
 <body>
-<jsp:include page="navBar.jsp"></jsp:include>
+	<jsp:include page="navBar.jsp"></jsp:include>
 	<div style="width: 50%;">
-	<div class="panel panel-default">
-		<div class="panel-body">
-			<form:form class="form-horizontal" action="/Sparkys-Bank/addExtUser"
-				method="post" commandName="extUser" name="f">
-				
-				<fieldset>
-					<legend>Add a new User</legend>
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<form:form class="form-horizontal" action="/Sparkys-Bank/addExtUser"
+					method="post" commandName="extUser" name="f">
+
+					<fieldset>
+						<legend>Add a new User</legend>
 
 
-					<div class="form-group">
-						<label class="col-lg-2 control-label">Firstname</label>
-						<div class="col-lg-10">
-							<form:input path="firstname" cssClass="form-control"/>
-							<form:errors path="firstname" cssClass="alert alert-dismissable alert-danger"></form:errors>
+						<div class="form-group">
+							<label class="col-lg-2 control-label">Firstname</label>
+							<div class="col-lg-10">
+								<form:input path="firstname" cssClass="form-control" />
+								<form:errors path="firstname"
+									cssClass="alert alert-dismissable alert-danger"></form:errors>
+							</div>
 						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-2 control-label">Middlename</label>
-						<div class="col-lg-10">
-							<form:input path="middlename" cssClass="form-control"/>
-							<form:errors path="middlename" cssClass="alert alert-dismissable alert-danger"></form:errors>
+						<div class="form-group">
+							<label class="col-lg-2 control-label">Middlename</label>
+							<div class="col-lg-10">
+								<form:input path="middlename" cssClass="form-control" />
+								<form:errors path="middlename"
+									cssClass="alert alert-dismissable alert-danger"></form:errors>
+							</div>
 						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-2 control-label">Lastname</label>
-						<div class="col-lg-10">
-							<form:input path="lastname" cssClass="form-control"/>
-							<form:errors path="lastname" cssClass="alert alert-dismissable alert-danger"></form:errors>
+						<div class="form-group">
+							<label class="col-lg-2 control-label">Lastname</label>
+							<div class="col-lg-10">
+								<form:input path="lastname" cssClass="form-control" />
+								<form:errors path="lastname"
+									cssClass="alert alert-dismissable alert-danger"></form:errors>
+							</div>
 						</div>
-					</div>
-					
-					<div class="form-group">
-						<label class="col-lg-2 control-label">Username</label>
-						<div class="col-lg-10">
-							<form:input path="username" cssClass="form-control"/>
-							<form:errors path="username" cssClass="alert alert-dismissable alert-danger"></form:errors>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-2 control-label">Password</label>
-						<div class="col-lg-10">
-							<form:password path="password" cssClass="form-control"/>
-							<form:errors path="password" cssClass="alert alert-dismissable alert-danger"></form:errors>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-2 control-label">Date Of Birth</label>
-						<div class="col-lg-10">
-							<form:input path="dob" cssClass="form-control" />
-							<form:errors path="dob" cssClass="alert alert-dismissable alert-danger"></form:errors>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-lg-2 control-label">Address</label>
-						<div class="col-lg-10">
-							<form:textarea path="address" cssClass="form-control"/>
-							<form:errors path="address" cssClass="alert alert-dismissable alert-danger"></form:errors>
-						</div>
-					</div>
-					
-					
-					<div class="form-group">
-						<div class="col-lg-10 col-lg-offset-2">
 
-							<button type="submit" class="btn btn-primary">Submit</button>
-							<button type="reset" class="btn btn-primary">Reset</button>
+						<div class="form-group">
+							<label class="col-lg-2 control-label">Username</label>
+							<div class="col-lg-10">
+								<form:input path="username" cssClass="form-control" />
+								<form:errors path="username"
+									cssClass="alert alert-dismissable alert-danger"></form:errors>
+							</div>
 						</div>
+						<div class="form-group">
+							<label class="col-lg-2 control-label">Password</label>
+							<div class="col-lg-10">
+								<form:password path="password" cssClass="form-control" />
+								<form:errors path="password"
+									cssClass="alert alert-dismissable alert-danger"></form:errors>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-2 control-label">Address</label>
+							<div class="col-lg-10">
+								<form:textarea path="address" cssClass="form-control" />
+								<form:errors path="address"
+									cssClass="alert alert-dismissable alert-danger"></form:errors>
+							</div>
+						</div>
+
+
+						<div class="form-group">
+							<div class="col-lg-10 col-lg-offset-2">
+
+								<button type="submit" class="btn btn-primary">Submit</button>
+								<button type="reset" class="btn btn-primary">Reset</button>
+							</div>
+						</div>
+					</fieldset>
+				</form:form>
+
+				<c:if test="${not empty accno }">
+					<div style="width: 30%;">
+						<div class="alert alert-dismissable alert-success">
+							<strong>Your account no ${accno} </br>
+
+							</strong>
+						</div>
+
 					</div>
-				</fieldset>
-			</form:form>
+				</c:if>
+
+			</div>
 		</div>
 	</div>
-</div>
 </body>
 </html>

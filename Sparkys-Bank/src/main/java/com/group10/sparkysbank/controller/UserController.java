@@ -2,6 +2,7 @@ package com.group10.sparkysbank.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,12 +18,10 @@ import com.group10.sparkysbank.validator.UserValidator;
 public class UserController {
 
 	@Autowired
-	UserValidator userValidator;
-	@Autowired
 	UserService userService;
-	
+
 	@RequestMapping(value="/addExtUser",method=RequestMethod.POST)
-	public String submitForm(@ModelAttribute ("extUser") @Validated Userinfo userInfo, BindingResult result, SessionStatus status)
+	public String submitForm(ModelMap model, @ModelAttribute ("extUser") @Validated Userinfo userInfo, BindingResult result, SessionStatus status)
 	{
 		
 		if(result.hasErrors())
@@ -31,8 +30,10 @@ public class UserController {
 			return "addExternalUserAccount";
 		}
 		System.out.println(userInfo.getFirstname());
-		userService.addNewExternalUuser(userInfo);
-		return "";
+		int accno=userService.addNewExternalUuser(userInfo);
+		
+		model.addAttribute("accno", accno);
+		return "addExternalUserAccount";
 	}
-	
+
 }
