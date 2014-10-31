@@ -39,21 +39,21 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Userinfo implements java.io.Serializable {
 	
 	private int iduserinfo;
-	@Pattern(regexp="^[a-z]{1,12}$",message="invalid first name")
+	@NotEmpty
 	private String firstname;
-	@Pattern(regexp="^[a-z]{1,12}$")
+	@NotEmpty
 	private String middlename;
-	@Pattern(regexp="^[a-z]{1,12}$")
+	@NotEmpty
 	private String lastname;
-	@Pattern(regexp="^[a-z0-9_-]{3,16}$", message="Invalid username")
+	@NotEmpty
 	private String username;
-	@Pattern(regexp="^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$")
+	@NotEmpty
 	private String password;
 
 	private Date dob;
 	@NotEmpty
 	private String address;
-
+	@NotEmpty
 	private String identificationid;
 	
 	private Date expirydate;

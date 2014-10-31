@@ -1,12 +1,10 @@
 package com.group10.sparkysbank.validator;
 
-import java.util.Date;
-
-import org.springframework.format.datetime.DateFormatter;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import com.group10.sparkysbank.model.Userinfo;
+
 
 
 public class UserValidator implements Validator {
@@ -25,20 +23,38 @@ public class UserValidator implements Validator {
 		String middlename=user.getMiddlename();
 		String lastname=user.getLastname();
 		String password=user.getPassword();
-		Date dob=user.getDob();
-		String address=user.getAddress();
 		String identificationId=user.getIdentificationid();
-		Date expDate=user.getExpirydate();
 		
-		if(firstname.matches("^[a-z]{1,12}$"))
+		if(!firstname.matches("^[a-zA-Z]{1,12}$"))
+		{
+			arg1.rejectValue("firstname", "Userinfo.firstname");
+		}
+		
+		if(!middlename.matches("^[a-zA-Z]{1,12}$"))
+		{
+			arg1.rejectValue("middlename", "Userinfo.middlename");
+		}
+		
+		if(!lastname.matches("^[a-zA-Z]{1,12}$"))
+		{
+			arg1.rejectValue("lastname", "Userinfo.lastname");
+		}
+					
+		if(!password.matches("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$"))
+		{
+			arg1.rejectValue("password", "Userinfo.password");
+			 
+		}
 			
-			if(middlename.matches("^[a-z]{1,12}$"))
-				if(lastname.matches("^[a-z]{1,12}$"))
-					if(password.matches("^[a-z]{1,12}$"))
+		if(!username.matches("^[a-z0-9_-]{3,16}$"))
+		{
+			arg1.rejectValue("username", "Userinfo.username");
+		}
 			
-		if(username.matches("/^[a-z0-9_-]{3,16}$/"))
-			
-	
+		if(!identificationId.matches("^[0-9]{9}$"))
+		{
+			arg1.rejectValue("identificationid", "Userinfo.identificationId");
+		}
 		System.out.println("in validator");
 	}
 

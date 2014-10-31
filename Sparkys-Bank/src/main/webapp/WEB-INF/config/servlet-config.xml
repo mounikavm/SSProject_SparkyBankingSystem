@@ -70,7 +70,8 @@
 		<property name="prefix" value="/WEB-INF/jsps/" />
 		<property name="suffix" value=".jsp"></property>
 	</bean>
-
+	
+	<bean id="userValidator" class="com.group10.sparkysbank.validator.UserValidator"></bean>
 	<!-- <bean id="userService" class="com.group10.sparkysbank.dao.UserDaoImpl"> 
 		<property name="sessionFactory" ref="sessionFactory"></property> </bean> -->
 	<!-- <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" 

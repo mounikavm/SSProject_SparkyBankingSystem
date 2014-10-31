@@ -30,7 +30,7 @@ public class Useraccounts implements java.io.Serializable {
 	private String routingno;
 	private String wiringno;
 	private Date accountopendate;
-	private Integer balance;
+	private Double balance;
 	private Set<AccountCard> accountCards = new HashSet<AccountCard>(0);
 	private Set<Transactions> transactionses = new HashSet<Transactions>(0);
 
@@ -42,7 +42,7 @@ public class Useraccounts implements java.io.Serializable {
 	}
 
 	public Useraccounts(int accountno, Userinfo userinfo, String routingno,
-			String wiringno, Date accountopendate, Integer balance,
+			String wiringno, Date accountopendate, Double balance,
 			Set<AccountCard> accountCards, Set<Transactions> transactionses) {
 		this.accountno = accountno;
 		this.userinfo = userinfo;
@@ -103,11 +103,11 @@ public class Useraccounts implements java.io.Serializable {
 	}
 
 	@Column(name = "balance")
-	public Integer getBalance() {
+	public Double getBalance() {
 		return this.balance;
 	}
 
-	public void setBalance(Integer balance) {
+	public void setBalance(Double balance) {
 		this.balance = balance;
 	}
 

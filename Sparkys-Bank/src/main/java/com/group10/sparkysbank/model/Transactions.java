@@ -7,6 +7,7 @@ package com.group10.sparkysbank.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -19,11 +20,14 @@ import javax.persistence.Table;
 @Table(name = "transactions", catalog = "sparkysbankdb")
 public class Transactions implements java.io.Serializable {
 
+	@Id
+	@Column(name = "idtransactions", unique = true, nullable = false)
+	@GeneratedValue
 	private int idtransactions;
-	private TransactionTypes transactionTypes;
-	private Useraccounts useraccounts;
+	private String transactionTypes;
+	private Integer fromAccount;
 	private Integer amtInvolved;
-	private String toAccountno;
+	private Integer toAccountno;
 	private String creditDebit;
 	private Integer approvalNeeded;
 	private Integer approved;
@@ -36,13 +40,13 @@ public class Transactions implements java.io.Serializable {
 		this.idtransactions = idtransactions;
 	}
 
-	public Transactions(int idtransactions, TransactionTypes transactionTypes,
-			Useraccounts useraccounts, Integer amtInvolved, String toAccountno,
+	public Transactions(int idtransactions, String transactionTypes,
+			Integer fromAccount, Integer amtInvolved, Integer toAccountno,
 			String creditDebit, Integer approvalNeeded, Integer approved,
 			Integer status) {
 		this.idtransactions = idtransactions;
 		this.transactionTypes = transactionTypes;
-		this.useraccounts = useraccounts;
+		this.fromAccount = fromAccount;
 		this.amtInvolved = amtInvolved;
 		this.toAccountno = toAccountno;
 		this.creditDebit = creditDebit;
@@ -51,8 +55,7 @@ public class Transactions implements java.io.Serializable {
 		this.status = status;
 	}
 
-	@Id
-	@Column(name = "idtransactions", unique = true, nullable = false)
+	
 	public int getIdtransactions() {
 		return this.idtransactions;
 	}
@@ -61,24 +64,22 @@ public class Transactions implements java.io.Serializable {
 		this.idtransactions = idtransactions;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "trans_type")
-	public TransactionTypes getTransactionTypes() {
+
+	public String getTransactionTypes() {
 		return this.transactionTypes;
 	}
 
-	public void setTransactionTypes(TransactionTypes transactionTypes) {
+	public void setTransactionTypes(String transactionTypes) {
 		this.transactionTypes = transactionTypes;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "accountno")
-	public Useraccounts getUseraccounts() {
-		return this.useraccounts;
+
+	public Integer getFromAccount() {
+		return fromAccount;
 	}
 
-	public void setUseraccounts(Useraccounts useraccounts) {
-		this.useraccounts = useraccounts;
+	public void setFromAccount(Integer fromAccount) {
+		this.fromAccount = fromAccount;
 	}
 
 	@Column(name = "amt_involved")
@@ -91,11 +92,11 @@ public class Transactions implements java.io.Serializable {
 	}
 
 	@Column(name = "to_accountno", length = 50)
-	public String getToAccountno() {
+	public Integer getToAccountno() {
 		return this.toAccountno;
 	}
 
-	public void setToAccountno(String toAccountno) {
+	public void setToAccountno(Integer toAccountno) {
 		this.toAccountno = toAccountno;
 	}
 

@@ -17,7 +17,7 @@
 </head>
 <body>
 	<jsp:include page="navBar.jsp"></jsp:include>
-	<div style="width: 50%;">
+	<div style="width: 70%;">
 		<div class="panel panel-default">
 			<div class="panel-body">
 				<form:form class="form-horizontal" action="/Sparkys-Bank/addExtUser"
@@ -77,6 +77,84 @@
 							</div>
 						</div>
 
+						<div class="form-group">
+							<label class="col-lg-2 control-label">Identification No</label>
+							<div class="col-lg-10">
+								<form:password path="identificationid" cssClass="form-control" />
+								<form:errors path="identificationid"
+									cssClass="alert alert-dismissable alert-danger"></form:errors>
+							</div>
+						</div>
+
+						<div class="form-group">
+
+							<label for="select" class="col-lg-2 control-label">Security
+								Questions 1</label>
+							<div class="col-lg-10">
+								<select name="sec1" class="form-control" id="select">
+									<option>What was the name of your elementary / primary
+										school?</option>
+									<option>In what city or town does your nearest sibling
+										live?</option>
+									<option>What was the name of your first stuffed animal
+										or doll or action figure?</option>
+									<option>What time of the day were you born? (hh:mm)</option>
+									<option>What was your favorite place to visit as a
+										child?</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-2 control-label">Answer</label>
+							<div class="col-lg-10">
+								<input type="text" class="form-control" name="sec1ans">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="select" class="col-lg-2 control-label">Security
+								Questions 2</label>
+							<div class="col-lg-10">
+								<select name="sec2" class="form-control" id="select">
+									<option>What was the name of your elementary / primary
+										school?</option>
+									<option>In what city or town does your nearest sibling
+										live?</option>
+									<option>What was the name of your first stuffed animal
+										or doll or action figure?</option>
+									<option>What time of the day were you born? (hh:mm)</option>
+									<option>What was your favorite place to visit as a
+										child?</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-lg-2 control-label">Answer</label>
+							<div class="col-lg-10">
+								<input type="text" class="form-control" name="sec2ans" />
+							</div>
+						</div>
+
+						<c:if test="${not empty error}">
+							<div style="width: 30%;">
+								<div class="alert alert-dismissable alert-danger">
+									<strong>Choose different security questions
+
+									</strong>
+								</div>
+
+							</div>
+						</c:if>
+						<c:if test="${not empty ans}">
+							<div style="width: 30%;">
+								<div class="alert alert-dismissable alert-danger">
+									<strong>Please provide answers for security questions
+
+									</strong>
+								</div>
+
+							</div>
+						</c:if>
+						
 
 						<div class="form-group">
 							<div class="col-lg-10 col-lg-offset-2">

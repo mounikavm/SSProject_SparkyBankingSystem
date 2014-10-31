@@ -11,8 +11,8 @@ public class PasswordTester extends TestCase {
 	@Test
 	public void testPasswordGenerator()
 	{
-		Md5PasswordEncoder encoder=new Md5PasswordEncoder();
-		String password=encoder.encodePassword("mohit", null);
+		BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
+		String password=encoder.encode("secret");
 		System.out.println(password);
 	}
 	
