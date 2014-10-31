@@ -25,19 +25,19 @@
 	</div>
 
 	<c:if test="${not empty error }">
-	<div style="width: 30%;">
-		<div class="alert alert-dismissable alert-danger">
-			<strong>Your Login attempt was unsuccessful.</br> 
-			
-			</strong>
+		<div style="width: 30%;">
+			<div class="alert alert-dismissable alert-danger">
+				<strong>Your Login attempt was unsuccessful.</br>
+
+				</strong>
+			</div>
+
 		</div>
-		
-	</div>
 	</c:if>
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<form:form action="j_spring_security_check" class="form-horizontal"
-				method="post"  name="f">
+				method="post" name="f">
 				<fieldset>
 					<legend>Login</legend>
 
@@ -59,11 +59,14 @@
 					<div class="form-group">
 						<div class="col-lg-10 col-lg-offset-2">
 
-							<button type="submit" class="btn btn-primary">Submit</button>
+							<button type="submit" class="btn btn-primary">Login</button>
 						</div>
 					</div>
 				</fieldset>
 			</form:form>
+			<div class="col-lg-10 col-lg-offset-2">
+				<a href="/Sparkys-Bank/forgotpassword"  class="btn btn-primary">Forgot Password</a>
+			</div>
 		</div>
 	</div>
 

@@ -42,4 +42,10 @@ public class LoginController {
 	{
 		return "403";
 	}
+	
+	@RequestMapping(value="/forgotpassword",method=RequestMethod.GET)
+	public String forgotPasswordClicked(Model model)
+	{
+		return "forgotPassword";
+	}
 }

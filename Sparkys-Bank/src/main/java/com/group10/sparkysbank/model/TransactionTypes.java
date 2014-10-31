@@ -21,7 +21,6 @@ import javax.persistence.Table;
 public class TransactionTypes implements java.io.Serializable {
 
 	private String idtransactionTypes;
-	private Set<Transactions> transactionses = new HashSet<Transactions>(0);
 
 	public TransactionTypes() {
 	}
@@ -30,11 +29,6 @@ public class TransactionTypes implements java.io.Serializable {
 		this.idtransactionTypes = idtransactionTypes;
 	}
 
-	public TransactionTypes(String idtransactionTypes,
-			Set<Transactions> transactionses) {
-		this.idtransactionTypes = idtransactionTypes;
-		this.transactionses = transactionses;
-	}
 
 	@Id
 	@Column(name = "idtransaction_types", unique = true, nullable = false, length = 45)
@@ -46,13 +40,5 @@ public class TransactionTypes implements java.io.Serializable {
 		this.idtransactionTypes = idtransactionTypes;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "transactionTypes")
-	public Set<Transactions> getTransactionses() {
-		return this.transactionses;
-	}
-
-	public void setTransactionses(Set<Transactions> transactionses) {
-		this.transactionses = transactionses;
-	}
 
 }

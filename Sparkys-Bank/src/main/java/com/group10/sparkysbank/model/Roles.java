@@ -24,7 +24,6 @@ import javax.persistence.Table;
 public class Roles implements java.io.Serializable {
 
 	private String type;
-	private Set<Userinfo> userinfos = new HashSet<Userinfo>(0);
 
 	public Roles() {
 	}
@@ -33,11 +32,7 @@ public class Roles implements java.io.Serializable {
 		this.type = type;
 	}
 
-	public Roles(String type, Set<Userinfo> userinfos) {
-		this.type = type;
-		this.userinfos = userinfos;
-	}
-
+ 
 	@Id
 	@Column(name = "type", unique = true, nullable = false, length = 45)
 	public String getType() {
@@ -48,14 +43,5 @@ public class Roles implements java.io.Serializable {
 		this.type = type;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "user_roles", catalog = "sparkysbankdb", joinColumns = { @JoinColumn(name = "role_type", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "iduserinfo", nullable = false, updatable = false) })
-	public Set<Userinfo> getUserinfos() {
-		return this.userinfos;
-	}
-
-	public void setUserinfos(Set<Userinfo> userinfos) {
-		this.userinfos = userinfos;
-	}
 
 }

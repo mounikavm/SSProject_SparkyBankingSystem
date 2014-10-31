@@ -7,9 +7,12 @@ package com.group10.sparkysbank.model;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -25,53 +28,40 @@ import javax.persistence.TemporalType;
 @Table(name = "useraccounts", catalog = "sparkysbankdb")
 public class Useraccounts implements java.io.Serializable {
 
-	private int accountno;
-	private Userinfo userinfo;
+	private Integer accountno;
+	private String username;
 	private String routingno;
 	private String wiringno;
 	private Date accountopendate;
-	private Double balance;
-	private Set<AccountCard> accountCards = new HashSet<AccountCard>(0);
-	private Set<Transactions> transactionses = new HashSet<Transactions>(0);
+	private double balance;
 
 	public Useraccounts() {
 	}
 
-	public Useraccounts(int accountno) {
+	public Useraccounts(Integer accountno) {
 		this.accountno = accountno;
 	}
 
-	public Useraccounts(int accountno, Userinfo userinfo, String routingno,
-			String wiringno, Date accountopendate, Double balance,
-			Set<AccountCard> accountCards, Set<Transactions> transactionses) {
+	public Useraccounts(Integer accountno, String username, String routingno,
+			String wiringno, Date accountopendate, double balance) {
 		this.accountno = accountno;
-		this.userinfo = userinfo;
+		this.username = username;
 		this.routingno = routingno;
 		this.wiringno = wiringno;
 		this.accountopendate = accountopendate;
 		this.balance = balance;
-		this.accountCards = accountCards;
-		this.transactionses = transactionses;
+
 	}
 
 	@Id
 	@Column(name = "accountno", unique = true, nullable = false, length = 50)
-	public int getAccountno() {
+	@GeneratedValue
+	public Integer getAccountno() {
 		return this.accountno;
 	}
 
-	public void setAccountno(int accountno) {
+	public void setAccountno(Integer accountno) {
 		this.accountno = accountno;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "iduserinfo")
-	public Userinfo getUserinfo() {
-		return this.userinfo;
-	}
-
-	public void setUserinfo(Userinfo userinfo) {
-		this.userinfo = userinfo;
 	}
 
 	@Column(name = "routingno", length = 45)
@@ -103,30 +93,21 @@ public class Useraccounts implements java.io.Serializable {
 	}
 
 	@Column(name = "balance")
-	public Double getBalance() {
+	public double getBalance() {
 		return this.balance;
 	}
 
-	public void setBalance(Double balance) {
+	public void setBalance(double balance) {
 		this.balance = balance;
 	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "useraccounts")
-	public Set<AccountCard> getAccountCards() {
-		return this.accountCards;
+	@Column(name="username")
+	public String getUsername() {
+		return username;
 	}
 
-	public void setAccountCards(Set<AccountCard> accountCards) {
-		this.accountCards = accountCards;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "useraccounts")
-	public Set<Transactions> getTransactionses() {
-		return this.transactionses;
-	}
-
-	public void setTransactionses(Set<Transactions> transactionses) {
-		this.transactionses = transactionses;
-	}
-
+	
 }

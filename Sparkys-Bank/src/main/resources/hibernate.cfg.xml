@@ -6,15 +6,17 @@
   <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
   <property name="hibernate.connection.username">root</property>
   <property name="hibernate.connection.password">root</property>
-  <property name="url">jdbc:mysql://localhost:3306/sparkysbankdb</property>
+  <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/sparkysbankdb</property>
   <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
   <property name="hibernate.show_sql">true</property>
-  <mapping class="com.group10.sparkysbank.model.Userinfo"/>
+  <property name="hibernate.hbm2ddl.auto">update</property>
   <mapping class="com.group10.sparkysbank.model.AccountCard"/>
   <mapping class="com.group10.sparkysbank.model.Pwdrecovery"/>
   <mapping class="com.group10.sparkysbank.model.Roles"/>
   <mapping class="com.group10.sparkysbank.model.Transactions"/>
   <mapping class="com.group10.sparkysbank.model.TransactionTypes"/>
   <mapping class="com.group10.sparkysbank.model.Useraccounts"/>
+  <mapping class="com.group10.sparkysbank.model.Userinfo"/>
+  <mapping class="com.group10.sparkysbank.model.UserRoles"/>
  </session-factory>
 </hibernate-configuration>

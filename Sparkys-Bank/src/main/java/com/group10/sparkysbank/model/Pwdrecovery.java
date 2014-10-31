@@ -7,6 +7,7 @@ package com.group10.sparkysbank.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,7 +21,7 @@ import javax.persistence.Table;
 public class Pwdrecovery implements java.io.Serializable {
 
 	private int idpwdrecovery;
-	private Userinfo userinfo;
+	private String username;
 	private String question1;
 	private String ans1;
 	private String question2;
@@ -33,10 +34,10 @@ public class Pwdrecovery implements java.io.Serializable {
 		this.idpwdrecovery = idpwdrecovery;
 	}
 
-	public Pwdrecovery(int idpwdrecovery, Userinfo userinfo, String question1,
+	public Pwdrecovery(int idpwdrecovery, String username, String question1,
 			String ans1, String question2, String ans2) {
 		this.idpwdrecovery = idpwdrecovery;
-		this.userinfo = userinfo;
+		this.username=username;
 		this.question1 = question1;
 		this.ans1 = ans1;
 		this.question2 = question2;
@@ -45,6 +46,7 @@ public class Pwdrecovery implements java.io.Serializable {
 
 	@Id
 	@Column(name = "idpwdrecovery", unique = true, nullable = false)
+	@GeneratedValue
 	public int getIdpwdrecovery() {
 		return this.idpwdrecovery;
 	}
@@ -53,14 +55,14 @@ public class Pwdrecovery implements java.io.Serializable {
 		this.idpwdrecovery = idpwdrecovery;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "iduserinfo")
-	public Userinfo getUserinfo() {
-		return this.userinfo;
+	@Column(name="username")
+	public String getUsername()
+	{
+		return this.username;
 	}
-
-	public void setUserinfo(Userinfo userinfo) {
-		this.userinfo = userinfo;
+	public void setUsername(String username)
+	{
+		this.username=username;
 	}
 
 	@Column(name = "question1")

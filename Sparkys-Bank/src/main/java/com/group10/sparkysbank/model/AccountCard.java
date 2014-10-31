@@ -7,6 +7,7 @@ package com.group10.sparkysbank.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,7 +21,7 @@ import javax.persistence.Table;
 public class AccountCard implements java.io.Serializable {
 
 	private int idaccountCard;
-	private Useraccounts useraccounts;
+	private Integer accountno;
 	private String cardno;
 	private String cvv;
 	private String expiryMonth;
@@ -33,10 +34,10 @@ public class AccountCard implements java.io.Serializable {
 		this.idaccountCard = idaccountCard;
 	}
 
-	public AccountCard(int idaccountCard, Useraccounts useraccounts,
+	public AccountCard(int idaccountCard, Integer accountno,
 			String cardno, String cvv, String expiryMonth, String expiryYear) {
 		this.idaccountCard = idaccountCard;
-		this.useraccounts = useraccounts;
+		this.accountno=accountno;
 		this.cardno = cardno;
 		this.cvv = cvv;
 		this.expiryMonth = expiryMonth;
@@ -45,6 +46,7 @@ public class AccountCard implements java.io.Serializable {
 
 	@Id
 	@Column(name = "idaccount_card", unique = true, nullable = false)
+	@GeneratedValue
 	public int getIdaccountCard() {
 		return this.idaccountCard;
 	}
@@ -53,14 +55,12 @@ public class AccountCard implements java.io.Serializable {
 		this.idaccountCard = idaccountCard;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "accountno")
-	public Useraccounts getUseraccounts() {
-		return this.useraccounts;
+	@Column(name="accountno")
+	public Integer getAccountNo(){
+		return this.accountno;
 	}
-
-	public void setUseraccounts(Useraccounts useraccounts) {
-		this.useraccounts = useraccounts;
+	public void setAccountNo(Integer accountno){
+		this.accountno=accountno;
 	}
 
 	@Column(name = "cardno", length = 45)

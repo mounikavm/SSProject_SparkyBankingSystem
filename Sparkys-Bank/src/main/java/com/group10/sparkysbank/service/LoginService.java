@@ -36,10 +36,10 @@ public class LoginService implements UserDetailsService{
 		{
 			String password=user.getPassword();
 			Collection<GrantedAuthority> roles=new ArrayList<GrantedAuthority>();
-				Set<Roles> rolesColl=user.getRoleses();
-			for(Roles role:rolesColl)
+			Set<String> rolesColl=userDao.getRolesByUserId(username);
+			for(String role:rolesColl)
 			{
-				roles.add(new GrantedAuthorityImpl(role.getType()));
+				roles.add(new GrantedAuthorityImpl(role));
 
 			}
 			User userInfo=new User(username, password, roles);

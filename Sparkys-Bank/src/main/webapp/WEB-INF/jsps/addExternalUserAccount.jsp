@@ -68,6 +68,16 @@
 									cssClass="alert alert-dismissable alert-danger"></form:errors>
 							</div>
 						</div>
+
+						<div class="form-group">
+							<label class="col-lg-2 control-label">Email</label>
+							<div class="col-lg-10">
+								<form:input path="email" cssClass="form-control" />
+								<form:errors path="email"
+									cssClass="alert alert-dismissable alert-danger"></form:errors>
+							</div>
+						</div>
+
 						<div class="form-group">
 							<label class="col-lg-2 control-label">Address</label>
 							<div class="col-lg-10">
@@ -137,9 +147,7 @@
 						<c:if test="${not empty error}">
 							<div style="width: 30%;">
 								<div class="alert alert-dismissable alert-danger">
-									<strong>Choose different security questions
-
-									</strong>
+									<strong>Choose different security questions </strong>
 								</div>
 
 							</div>
@@ -154,7 +162,7 @@
 
 							</div>
 						</c:if>
-						
+
 
 						<div class="form-group">
 							<div class="col-lg-10 col-lg-offset-2">
