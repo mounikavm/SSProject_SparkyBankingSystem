@@ -7,7 +7,13 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Sparkys-Bank Maven Webapp</name>
 	<url>http://maven.apache.org</url>
+
 	<dependencies>
+	    <dependency>
+            <groupId>net.tanesha.recaptcha4j</groupId>
+            <artifactId>recaptcha4j</artifactId>
+            <version>0.0.7</version>
+        </dependency>
 
 		<dependency>
 			<groupId>log4j</groupId>

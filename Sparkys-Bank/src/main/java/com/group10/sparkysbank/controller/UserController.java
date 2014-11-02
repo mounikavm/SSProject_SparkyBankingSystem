@@ -1,7 +1,11 @@
 package com.group10.sparkysbank.controller;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import net.tanesha.recaptcha.ReCaptcha;
+import net.tanesha.recaptcha.ReCaptchaResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,7 +41,65 @@ public class UserController {
 	@Autowired
 	PasswordEncoder encoder;
 
+	@Autowired
+	private ReCaptcha recaptcha; 
 	@RequestMapping(value="/addExtUser",method=RequestMethod.POST)
+	public String submitForm(ModelMap model, @ModelAttribute ("extUser") @Validated Userinfo userInfo, BindingResult result, SessionStatus status, HttpServletRequest request, HttpServletResponse response,ServletRequest servletRequest)
+	{
+		System.out.println("hello");
+		String challangeField=request.getParameter("recaptcha_challenge_field").toString();
+		String responseField=request.getParameter("recaptcha_response_field").toString();
+		System.out.println("Secret="+challangeField);
+		System.out.println("Secret="+responseField);
+
+		String remoteAddress = servletRequest.getRemoteAddr();
+				 ReCaptchaResponse reCaptchaResponse = this.recaptcha.checkAnswer(remoteAddress, challangeField, responseField);
+		 if(!reCaptchaResponse.isValid()) {
+			 model.addAttribute("captchaerror", "captchaerror");
+			result.addError(new ObjectError("", "captchaerror"));
+			return "addExternalUserAccount";
+		 }
+		String que1=request.getParameter("sec1").toString();
+		String que2=request.getParameter("sec2").toString();
+
+		String ans1=request.getParameter("sec1ans").toString();
+		String ans2=request.getParameter("sec2ans").toString();
+		if(que1.equals(que2))
+		{
+			model.addAttribute("error", "error");
+			result.addError(new ObjectError("", "asda"));
+		}
+
+		if(ans1.equals("") || ans1==null || ans2.equals("") || ans2==null)
+		{
+			model.addAttribute("ans","ans");
+			result.addError(new ObjectError("", "asdad"));
+		}
+		userValidator.validate(userInfo, result);
+
+		if(result.hasErrors())
+		{
+			System.out.println("error");
+			return "addExternalUserAccount";
+		}
+		System.out.println(userInfo.getFirstname());
+		String pass=userInfo.getPassword();
+		userInfo.setPassword(encoder.encode(pass));
+
+
+		int accno=userService.addNewExternalUuser(userInfo,que1,que2,ans1,ans2);
+
+		model.addAttribute("accno", accno);
+		return "addExternalUserAccount";
+		
+}
+	@RequestMapping(value="/addExtUser1",method=RequestMethod.POST)
+	public String submitForm1(ModelMap model, @ModelAttribute ("extUser") @Validated Userinfo userInfo, BindingResult result, SessionStatus status, HttpServletRequest request, HttpServletResponse response)
+	{
+		System.out.println("check");
+		return "addExternalUserAccount";
+	}
+/*	@RequestMapping(value="/addExtUser",method=RequestMethod.POST)
 	public String submitForm(ModelMap model, @ModelAttribute ("extUser") @Validated Userinfo userInfo, BindingResult result, SessionStatus status, HttpServletRequest request, HttpServletResponse response)
 	{
 		String que1=request.getParameter("sec1").toString();
@@ -73,7 +135,7 @@ public class UserController {
 		model.addAttribute("accno", accno);
 		return "addExternalUserAccount";
 	}
-
+*/
 	//Author: Sravya
 	
 	//VIEW
