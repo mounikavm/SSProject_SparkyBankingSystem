@@ -16,5 +16,7 @@
 </head>
 <body>
 <jsp:include page="navBar.jsp"></jsp:include>
+<jsp:include page="managementBar.jsp"></jsp:include>
+<a href="<c:url value='/viewTransactions' />" >ViewTransaction</a>
 </body>
 </html>

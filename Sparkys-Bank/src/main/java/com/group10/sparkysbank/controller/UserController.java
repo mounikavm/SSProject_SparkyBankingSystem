@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.group10.sparkysbank.model.Useraccounts;
 import com.group10.sparkysbank.model.Userinfo;
+import com.group10.sparkysbank.service.AccountManagerService;
 import com.group10.sparkysbank.service.UserService;
 import com.group10.sparkysbank.validator.UserValidator;
 
@@ -24,6 +27,9 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	AccountManagerService accountManagerService;
 
 	@Autowired
 	UserValidator userValidator;
@@ -68,4 +74,102 @@ public class UserController {
 		return "addExternalUserAccount";
 	}
 
+	//Author: Sravya
+	
+	//VIEW
+	@RequestMapping(value="/UserAccountManagement",method=RequestMethod.GET)
+	public String viewUserAccessInfo(Model model)
+	{
+		model.addAttribute("accessInfo", new Userinfo());
+		return "usrAccMgmt";
+	}
+	
+/*	@RequestMapping(value="/usrAccMgmtAccess",method=RequestMethod.POST)
+	public String viewUserAccessInfo(@ModelAttribute ("accessInfo")Userinfo userInfo, BindingResult result, SessionStatus status,Model model)
+	{
+		System.out.println(userInfo.getIdentificationid() + userInfo.getUsername());
+		if(result.hasErrors()||userService.getUserInfo(userInfo)==null)
+		{
+			System.out.println("error");
+			return "internalHome";
+		}
+		model.addAttribute("userInfoObj", userService.getUserInfo(userInfo));
+		return "usrAccMgmtAccessForm";
+	}*/
+	
+	@RequestMapping(value="/UserAccountManagement",method=RequestMethod.POST)
+	public String viewUserInfo(@ModelAttribute ("accessInfo")Userinfo userInfo, BindingResult result, SessionStatus status,Model model)
+	{
+		model.addAttribute("accessInfo", userService.getUserInfo(userInfo));
+		if(result.hasErrors()||userService.getUserInfo(userInfo)==null)
+		{
+			System.out.println("error");
+			return "internalHome";
+		}
+		model.addAttribute("userInfoObj", userService.getUserInfo(userInfo));
+		return "usrAccMgmt";
+	}
+	
+	//EDIT
+	@RequestMapping(value="/UserAccountManagementEdit",method=RequestMethod.GET)
+	public String updateUserInfo(Model model)
+	{
+		model.addAttribute("accessInfo", new Userinfo());
+		return "usrAccMgmtEdit";
+	}
+	
+	@RequestMapping(value="/UserAccountManagementEdit",method=RequestMethod.POST)
+	public String updateUserInfo(@ModelAttribute ("accessInfo")Userinfo userInfo, BindingResult result, SessionStatus status,Model model)
+	{
+		//case where the verification credentials are posted
+		if(userInfo.getEmail()==null && userInfo.getAddress()==null)
+		{
+			Userinfo ui = userService.getUserInfobyUserName(userInfo.getUsername());
+			model.addAttribute("accessInfo", userService.getUserInfo(userInfo));
+			return "usrAccMgmtEdit";
+		}
+		//case where the update is being made
+		else
+		{
+		   Userinfo ui = userService.getUserInfobyUserName(userInfo.getUsername());
+		   if(userInfo.getAddress() != ui.getAddress())
+			    {
+			    	ui.setAddress(userInfo.getAddress());
+			    }
+		   if(userInfo.getEmail() != ui.getEmail())
+			    {
+			    	ui.setEmail(userInfo.getEmail());
+			    }
+		   userService.updateUserInfo(ui);
+		   model.addAttribute("accessInfo", userService.getUserInfobyUserName(userInfo.getUsername()));
+		   return "usrAccMgmtEdit";
+		}
+	}
+	
+	//DELETE
+	@RequestMapping(value="/UserAccountManagementDelete",method=RequestMethod.GET)
+	public String deleteUserInfo(Model model)
+	{
+		model.addAttribute("accessInfo", new Userinfo());
+		return "usrAccMgmtDelete";
+	}
+	
+	@RequestMapping(value="/UserAccountManagementDelete",method=RequestMethod.POST)
+	public String deleteUserInfo(@ModelAttribute ("accessInfo")Userinfo userInfo, BindingResult result, SessionStatus status,Model model)
+	{
+		//case where the verification credentials are posted
+		if(userInfo.getEmail()==null)
+		{
+			Userinfo ui = userService.getUserInfobyUserName(userInfo.getUsername());
+			model.addAttribute("accessInfo", userService.getUserInfo(userInfo));
+			return "usrAccMgmtDelete";
+		}
+		//case where the delete is being made
+		else
+		{
+		   Userinfo ui = userService.getUserInfobyUserName(userInfo.getUsername());
+		   userService.deleteUserInfo(ui);
+		   return "usrAccMgmtDeleteMessage";
+		}
+	}
 }

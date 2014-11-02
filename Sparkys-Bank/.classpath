@@ -33,7 +33,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="E:/MCS/Semester-3/SS/Project/SSProject_SparkyBankingSystem/SSProject_SparkyBankingSystem/Sparkys-Bank/src/main/webapp/WEB-INF/lib/bcprov-jdk15on-151.jar">
+	<classpathentry kind="lib" path="E:/FALL2014/SoftwareSecurity/ProjectCode2/SSProject_SparkyBankingSystem/Sparkys-Bank/src/main/webapp/WEB-INF/lib/bcprov-jdk15on-151.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
