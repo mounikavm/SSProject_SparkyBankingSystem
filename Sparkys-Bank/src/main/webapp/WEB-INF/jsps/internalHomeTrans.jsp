@@ -19,7 +19,7 @@
 <jsp:include page="managementBar.jsp"></jsp:include>
 <div class="btn-group btn-group-justified">
     <a href="/Sparkys-Bank/AuthorizeTransactions" class="btn btn-primary">AuthorizeTransactions</a>
-    <a href="/Sparkys-Bank/AuthorizeTransactions" class="btn btn-primary">ReviewTransactions</a>
+<!--     <a href="/Sparkys-Bank/AuthorizeTransactions" class="btn btn-primary">ReviewTransactions</a> -->    <a href="/Sparkys-Bank/UserAccountManagementActivity" class="btn btn-primary">ReviewTransactions</a>
     <a href="/Sparkys-Bank/AuthorizeTransactions" class="btn btn-primary">ReviewTransactionsRequest</a>
  </div>
 </body>

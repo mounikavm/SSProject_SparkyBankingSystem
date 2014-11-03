@@ -136,12 +136,32 @@ public class UserService {
 						return null;
 					}
 					Transactions t = transactionsDAO.findEditableOrNot(accno);
-					if(t==null)
+					if(t!=null)
 						return (t.getTransactionTypes()).substring(7, t.getTransactionTypes().length()-1);
 					//else if(t.getStatus()==2&&(t.getTransactionTypes().equals("TR_VIEW")&&t.getApprovalNeeded()==1))
 						//return true;
 					else 
 						return null;
+				}
+				
+    //get if view transactions is authorized
+				@Transactional
+				public Boolean getViewTransactionAuthorization(String username)
+				{
+					int accno;
+					try
+					{
+					accno = (accountManagerService.getUserAccountForUserName(username)).getAccountno();
+					}
+					catch(Exception e)
+					{
+						return null;
+					}
+					Transactions t = transactionsDAO.findTransViewableOrNot(accno);
+					if(t!=null)
+						return true;
+					else 
+						return false;
 				}
 		
 }

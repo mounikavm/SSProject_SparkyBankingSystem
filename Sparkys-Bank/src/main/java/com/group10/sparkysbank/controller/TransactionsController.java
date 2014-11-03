@@ -81,7 +81,71 @@ public class TransactionsController {
 	@RequestMapping(value="/UserAccountManagementActivity",method=RequestMethod.POST)
 	public String activityUserInfo(@ModelAttribute ("accessInfo")Userinfo userInfo, BindingResult result, SessionStatus status,Model model)
 	{
-		//case where the verification credentials are posted and activity records are sent
+		//add objects to model
+				model.addAttribute("accessInfo", userInfo);
+				model.addAttribute("usernameerror",null);
+				//validate input format
+				if(userInfo.getUsername()!=null)
+				{
+					if(!(userInfo.getUsername()).matches("^[a-z0-9_-]{3,16}$"))
+					{
+						model.addAttribute("usernameerror","Please enter a valid username");
+						return "usrAccMgmtActivity";
+					}
+					else
+					{
+						//validate if reasonable request and username exists
+						if(userService.getUserInfobyUserName(userInfo.getUsername())==null)
+						{
+							model.addAttribute("usernameerror","Specified username does not exist");
+							return "usrAccMgmtActivity";
+						}
+						else
+						{
+							Userinfo ui = userService.getUserInfobyUserName(userInfo.getUsername());
+							//check if the user is an external user
+							String ur = userService.getUserRoleType(ui.getUsername());
+							if(ur.equals("ROLE_CUSTOMER")||ur.equals("ROLE_MERCHANT"))
+							{
+							     //check if this viewing has been authorized
+								if(userService.getViewTransactionAuthorization(ui.getUsername()))
+								{
+									Useraccounts ua;
+									try
+									{
+								        ua = accountManagerService.getUserAccountForUserName(userInfo.getUsername());
+									}
+									catch(Exception e)
+									{
+										return "usrAccMgmtActivity";
+									}
+									   List<Transactions> trans =  transactionsService.getTransactionsbyAccountNo(ua.getAccountno());
+									   model.addAttribute("accessInfo", ui);
+									   model.addAttribute("transList", trans);
+									   return "usrAccMgmtActivity";
+								}
+								else
+								{
+									model.addAttribute("usernameerror","Currently not authorized to view");
+									return "usrAccMgmtActivity";
+								}
+							}
+							else
+							{
+								model.addAttribute("usernameerror", "Not a valid external user");
+								return "usrAccMgmtActivity";
+							}
+						}
+					}
+				}
+				else
+				{
+					model.addAttribute("usernameerror","Please enter the username");
+					return "usrAccMgmtActivity";
+				}
+					//////////////////////////
+		
+		/*//case where the verification credentials are posted and activity records are sent
 		if(userInfo.getUsername()!=null)
 		{
 			//Validating info
@@ -113,6 +177,6 @@ public class TransactionsController {
 		{
 			model.addAttribute("accessInfo", new Userinfo());
 			return "usrAccMgmtActivity";
-		}
+		}*/
 	}
 }

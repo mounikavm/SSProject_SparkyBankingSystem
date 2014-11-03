@@ -63,7 +63,7 @@
 	   </div>
 	   <input type="submit" value="Update Details" />
 	  </form:form>
-	  <form:form action="/RejectUpdate" method="post">
+	  <form:form action="/Sparkys-Bank/RejectUpdate" method="post">
 	       <input type="submit" value="Reject Update" />
 	   </form:form>
    </div>

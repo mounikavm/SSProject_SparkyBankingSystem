@@ -55,8 +55,9 @@ public class TransactionsDaoImpl implements TransactionsDao {
 	public List<Transactions> findTransactionListByAccountno(int accno) {
 		Session session=sessionFactory.getCurrentSession();
 		//session.beginTransaction();
-		Query query=session.createQuery("from Transactions where fromAccount =:ano");
+		Query query=session.createQuery("from Transactions where fromAccount =:ano and status =:statusno");
 		query.setParameter("ano", accno);
+		query.setParameter("statusno", 1);
 		List transList = query.list(); 		
 
 		return transList;
@@ -124,6 +125,30 @@ public class TransactionsDaoImpl implements TransactionsDao {
 		{
 			if(!(trans.getTransactionTypes().contains("TR_EDIT")))
 				trans=null;
+			else
+			{
+				trans.setStatus(3);
+				trans=updateTrans(trans);
+			}
+		}
+		return trans;
+	}
+	
+	@Transactional
+	public Transactions findTransViewableOrNot(int accno)
+	{
+		Session session=sessionFactory.getCurrentSession();
+		//session.beginTransaction();
+		Criteria criteria=session.createCriteria(Transactions.class);
+		criteria.add(Restrictions.eq("fromAccount", accno));
+		criteria.add(Restrictions.eq("transactionTypes", "TR_VIEWTR"));
+		criteria.add(Restrictions.eq("status", 2));
+		criteria.add(Restrictions.eq("approvalNeeded", 1));
+		Transactions trans=(Transactions)criteria.uniqueResult();
+		if(trans!=null)
+		{
+			trans.setStatus(3);
+			trans=updateTrans(trans);
 		}
 		return trans;
 	}

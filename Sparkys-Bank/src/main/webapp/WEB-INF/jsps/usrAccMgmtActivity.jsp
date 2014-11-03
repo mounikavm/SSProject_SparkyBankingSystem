@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>External User Activity</title>
 </head>
 <body>
    <jsp:include page="internalHome.jsp"></jsp:include>
@@ -18,11 +18,11 @@
     <div>
       <div class="col-lg-10">
            <form:input path="username" class="form-control" id="usernameid" placeholder="User Name" />
+           <label style="color:red">${usernameerror}</label>
       </div>
     </div>
     <div class="form-group">
       <div class="col-lg-10 col-lg-offset-2">
-        <button class="btn btn-default">Cancel</button>
         <button type="submit" class="btn btn-primary">Submit</button>
       </div>
     </div>

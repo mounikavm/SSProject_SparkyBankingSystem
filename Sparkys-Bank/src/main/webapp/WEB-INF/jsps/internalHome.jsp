@@ -20,11 +20,11 @@
 <div class="btn-group btn-group-justified">
     <a href="/Sparkys-Bank/UserAccountManagement" class="btn btn-primary">View</a>
   	<a href="/Sparkys-Bank/EditExtProfile" class="btn btn-primary">Edit</a>
-   	<a href="/Sparkys-Bank/UserAccountManagement" class="btn btn-primary">View</a>
   	<!-- <a href="/Sparkys-Bank/UserAccountManagementEdit" class="btn btn-primary">Edit</a> -->
 	<!-- <a href="/Sparkys-Bank/UserAccountManagementDelete" class="btn btn-primary">Delete</a> -->
-	<a href="/Sparkys-Bank/UserAccountManagementActivity" class="btn btn-primary">Activity</a>
-	<a href="/Sparkys-Bank/AuthorizeUpdates" class="btn btn-primary">Authorize Updates</a>
+	<a href="/Sparkys-Bank/UserAccountManagementActivity" class="btn btn-primary">ReviewTransactions</a>
+	<a href="/Sparkys-Bank/AuthorizeUpdates" class="btn btn-primary">Authorize Request List</a>
+	<a href="/Sparkys-Bank/AuthorizeTransactions" class="btn btn-primary">AuthorizeTransactions</a>
  </div>
 <%-- <a href="<c:url value='/viewTransactions' />" >ViewTransaction</a> --%>
 </body>
