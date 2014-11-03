@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<div class="navbar navbar-inverse">
+<div class="navbar navbar-inverse" style="margin:0px">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
 				data-target=".navbar-inverse-collapse">
@@ -24,31 +24,22 @@
 		<div class="navbar-collapse collapse navbar-inverse-collapse">
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="#">Home</a></li>
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown">Account Management<b class="caret"></b></a>
+				<sec:authorize ifAnyGranted="ROLE_ADMIN"><li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown">Admin Specific Account Management<b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<sec:authorize ifAnyGranted="ROLE_ADMIN"><li><a href="/Sparkys-Bank/register">Add a new account</a></li></sec:authorize>
-						<li class="divider"></li>
-						<li class="dropdown-header">Dropdown header</li>
-						<li><a href="#">Separated link</a></li>
-						<li><a href="#">One more separated link</a></li>
-					</ul></li>
+						<sec:authorize ifAnyGranted="ROLE_ADMIN"><li><a href="/Sparkys-Bank/ViewEmpProfile">View Emp</a></li></sec:authorize>
+                        <sec:authorize ifAnyGranted="ROLE_ADMIN"><li><a href="/Sparkys-Bank/EditEmpProfile">Edit Emp</a></li></sec:authorize>
+                        <sec:authorize ifAnyGranted="ROLE_ADMIN"><li><a href="/Sparkys-Bank/DeleteEmpProfile">Delete Emp</a></li></sec:authorize>
+					</ul></li></sec:authorize>
+								<sec:authorize ifAnyGranted="ROLE_ADMIN"><li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown">Admin Specific Transaction Management<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						    <sec:authorize ifAnyGranted="ROLE_ADMIN"><li><a href="/Sparkys-Bank/ReviewPIIChange">PII Change Req</a></li></sec:authorize>
+					</ul></li></sec:authorize>
 			</ul>
-			<form class="navbar-form navbar-left">
-				<input type="text" class="form-control col-lg-8"
-					placeholder="Search">
-			</form>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="j_spring_security_logout">Logout</a></li>
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-					<ul class="dropdown-menu">
-						<li><a href="#">Action</a></li>
-						<li><a href="#">Another action</a></li>
-						<li><a href="#">Something else here</a></li>
-						<li class="divider"></li>
-						<li><a href="#">Separated link</a></li>
-					</ul></li>
 			</ul>
 		</div>
 	</div>

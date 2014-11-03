@@ -8,13 +8,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Delete Employee Profile</title>
 </head>
 <body>
    <jsp:include page="internalHome.jsp"></jsp:include>
-      <form:form class="form-horizontal" commandName="accessInfo" method="post" action="/Sparkys-Bank/UserAccountManagement">
+    <form:form class="form-horizontal" commandName="accessInfo" method="post" action="/Sparkys-Bank/DeleteEmpProfile">
     <fieldset>
-    <legend>Enter User Credentials to Access Account Details</legend>
+    <legend>Enter User Credentials to Delete Account</legend>
     <div>
       <div class="col-lg-10">
            <form:input path="username" class="form-control" id="usernameid" placeholder="User Name" />
@@ -23,41 +23,46 @@
     </div>
     <div class="form-group">
       <div class="col-lg-10 col-lg-offset-2">
-        <button class="btn btn-default">Cancel</button>
         <button type="submit" class="btn btn-primary">Submit</button>
       </div>
     </div>
   </fieldset>
    </form:form>
    <div>
+   <label style="color:red">${deleteMessage}</label>
+   <h4>Are you sure you want to delete this employee record?</h4>
+	<form:form commandName="accessInfo" action="/Sparkys-Bank/DeleteEmpProfile" method="post">
 		<div class="panel panel-default">
 			<div class="panel-heading">First Name</div>
-			<div class="panel-body">${accessInfo.firstname}</div>
+			<form:input path="firstname" readonly="true"/>
 		</div>
 		<div class="panel panel-default">
 			<div class="panel-heading">Middle Name</div>
-			<div class="panel-body">${accessInfo.middlename}</div>
-		</div>
+            <form:input path="middlename" readonly="true"/>
+   		</div>
 		<div class="panel panel-default">
 			<div class="panel-heading">Last Name</div>
-			<div class="panel-body">${accessInfo.lastname}</div>
+			<form:input path="lastname" readonly="true"/>
 		</div>
 		<div class="panel panel-default">
 			<div class="panel-heading">User Name</div>
-			<div class="panel-body">${accessInfo.username}</div>
+			<form:input path="username" readonly="true"/>
 		</div>
 		<div class="panel panel-default">
 			<div class="panel-heading">Identification ID</div>
-			<div class="panel-body">${accessInfo.identificationid}</div>
+			<form:input path="identificationid" readonly="true"/>
 		</div>
 		<div class="panel panel-default">
 			<div class="panel-heading">Email ID</div>
-			<div class="panel-body">${accessInfo.email}</div>
+			<form:input path="email" readonly="true"/>
 		</div>
 		<div class="panel panel-default">
 			<div class="panel-heading">Address</div>
-			<div class="panel-body">${accessInfo.address}</div>
+			<form:input path="address" readonly="true"/>
 	   </div>
+	   <input type="submit" value="Update Details" />
+	  </form:form>
    </div>
+   
 </body>
 </html>

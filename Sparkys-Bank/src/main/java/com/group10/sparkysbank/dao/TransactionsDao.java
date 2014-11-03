@@ -17,4 +17,6 @@ public interface TransactionsDao {
 	public List<Transactions> findTransactionListByAccountno(int accountno);
 	public Set<Transactions> findPendingTransactionList(String accountno);
 	public Set<Transactions> findPendingTransactionList();
+	public Transactions findViewableOrNot(int accno);
+	public Transactions findEditableOrNot(int accno);
 }

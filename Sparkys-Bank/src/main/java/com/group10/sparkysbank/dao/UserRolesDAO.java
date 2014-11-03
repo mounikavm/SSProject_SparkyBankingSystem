@@ -7,4 +7,5 @@ import com.group10.sparkysbank.model.Userinfo;
 
 public interface UserRolesDAO {
 	public Set<String> getRolesByUserId(int userId);
+	public String findUserRoleType(String username);
 }

@@ -12,19 +12,12 @@
 </head>
 <body>
    <jsp:include page="internalHome.jsp"></jsp:include>
-   <div class="btn-group btn-group-justified">
-   	<a href="/Sparkys-Bank/UserAccountManagement" class="btn btn-primary">View</a>
-  	<a href="/Sparkys-Bank/UserAccountManagementEdit" class="btn btn-primary">Edit</a>
-	<a href="/Sparkys-Bank/UserAccountManagementDelete" class="btn btn-primary">Delete</a>
-	<a href="/Sparkys-Bank/UserAccountManagementActivity" class="btn btn-primary">Activity</a>
-   </div>
       <form:form class="form-horizontal" commandName="accessInfo" method="post" action="/Sparkys-Bank/UserAccountManagementActivity">
     <fieldset>
     <legend>Enter User Credentials to Edit Account Details</legend>
     <div>
       <div class="col-lg-10">
            <form:input path="username" class="form-control" id="usernameid" placeholder="User Name" />
-           <form:input path="identificationid" class="form-control" id="ididentificationid" placeholder="Identification ID(SSN/PassportNo)" />
       </div>
     </div>
     <div class="form-group">

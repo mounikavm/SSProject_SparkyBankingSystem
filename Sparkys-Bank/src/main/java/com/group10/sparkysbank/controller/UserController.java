@@ -20,10 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.group10.sparkysbank.model.UserRoles;
 import com.group10.sparkysbank.model.Useraccounts;
 import com.group10.sparkysbank.model.Userinfo;
 import com.group10.sparkysbank.service.AccountManagerService;
 import com.group10.sparkysbank.service.UserService;
+import com.group10.sparkysbank.validator.UserPIIValidator;
 import com.group10.sparkysbank.validator.UserValidator;
 
 @Controller
@@ -37,12 +39,16 @@ public class UserController {
 
 	@Autowired
 	UserValidator userValidator;
+	
+//	@Autowired
+//	UserPIIValidator userPIIValidator;
 
 	@Autowired
 	PasswordEncoder encoder;
 
 	@Autowired
 	private ReCaptcha recaptcha; 
+	
 	@RequestMapping(value="/addExtUser",method=RequestMethod.POST)
 	public String submitForm(ModelMap model, @ModelAttribute ("extUser") @Validated Userinfo userInfo, BindingResult result, SessionStatus status, HttpServletRequest request, HttpServletResponse response,ServletRequest servletRequest)
 	{
@@ -93,52 +99,16 @@ public class UserController {
 		return "addExternalUserAccount";
 		
 }
+	
 	@RequestMapping(value="/addExtUser1",method=RequestMethod.POST)
 	public String submitForm1(ModelMap model, @ModelAttribute ("extUser") @Validated Userinfo userInfo, BindingResult result, SessionStatus status, HttpServletRequest request, HttpServletResponse response)
 	{
 		System.out.println("check");
 		return "addExternalUserAccount";
 	}
-/*	@RequestMapping(value="/addExtUser",method=RequestMethod.POST)
-	public String submitForm(ModelMap model, @ModelAttribute ("extUser") @Validated Userinfo userInfo, BindingResult result, SessionStatus status, HttpServletRequest request, HttpServletResponse response)
-	{
-		String que1=request.getParameter("sec1").toString();
-		String que2=request.getParameter("sec2").toString();
 
-		String ans1=request.getParameter("sec1ans").toString();
-		String ans2=request.getParameter("sec2ans").toString();
-		if(que1.equals(que2))
-		{
-			model.addAttribute("error", "error");
-			result.addError(new ObjectError("", "asda"));
-		}
-
-		if(ans1.equals("") || ans1==null || ans2.equals("") || ans2==null)
-		{
-			model.addAttribute("ans","ans");
-			result.addError(new ObjectError("", "asdad"));
-		}
-		userValidator.validate(userInfo, result);
-
-		if(result.hasErrors())
-		{
-			System.out.println("error");
-			return "addExternalUserAccount";
-		}
-		System.out.println(userInfo.getFirstname());
-		String pass=userInfo.getPassword();
-		userInfo.setPassword(encoder.encode(pass));
-
-
-		int accno=userService.addNewExternalUuser(userInfo,que1,que2,ans1,ans2);
-
-		model.addAttribute("accno", accno);
-		return "addExternalUserAccount";
-	}
-*/
 	//Author: Sravya
-	
-	//VIEW
+	//VIEW External Users
 	@RequestMapping(value="/UserAccountManagement",method=RequestMethod.GET)
 	public String viewUserAccessInfo(Model model)
 	{
@@ -146,70 +116,165 @@ public class UserController {
 		return "usrAccMgmt";
 	}
 	
-/*	@RequestMapping(value="/usrAccMgmtAccess",method=RequestMethod.POST)
-	public String viewUserAccessInfo(@ModelAttribute ("accessInfo")Userinfo userInfo, BindingResult result, SessionStatus status,Model model)
-	{
-		System.out.println(userInfo.getIdentificationid() + userInfo.getUsername());
-		if(result.hasErrors()||userService.getUserInfo(userInfo)==null)
-		{
-			System.out.println("error");
-			return "internalHome";
-		}
-		model.addAttribute("userInfoObj", userService.getUserInfo(userInfo));
-		return "usrAccMgmtAccessForm";
-	}*/
-	
 	@RequestMapping(value="/UserAccountManagement",method=RequestMethod.POST)
-	public String viewUserInfo(@ModelAttribute ("accessInfo")Userinfo userInfo, BindingResult result, SessionStatus status,Model model)
+	public String viewUserInfo(@ModelAttribute ("accessInfo") @Validated Userinfo userInfo, BindingResult result, SessionStatus status,Model model)
 	{
-		model.addAttribute("accessInfo", userService.getUserInfo(userInfo));
-		if(result.hasErrors()||userService.getUserInfo(userInfo)==null)
+		//add objects to model
+		model.addAttribute("accessInfo", userInfo);
+		model.addAttribute("usernameerror",null);
+		//validate input format
+		//userPIIValidator.validate(userInfo, result);
+		if(userInfo.getUsername()!=null)
 		{
-			System.out.println("error");
-			return "internalHome";
+			if(!(userInfo.getUsername()).matches("^[a-z0-9_-]{3,16}$"))
+			{
+				model.addAttribute("usernameerror","Please enter a valid username");
+				return "usrAccMgmt";
+			}
+			else
+			{
+				//validate if reasonable request and username exists
+				if(userService.getUserInfobyUserName(userInfo.getUsername())==null)
+				{
+					model.addAttribute("usernameerror","Specified username does not exist");
+					return "usrAccMgmt";
+				}
+				else
+				{
+					Userinfo ui = userService.getUserInfobyUserName(userInfo.getUsername());
+					//check if the user is an external user
+					String ur = userService.getUserRoleType(ui.getUsername());
+					if(ur.equals("ROLE_CUSTOMER")||ur.equals("ROLE_MERCHANT"))
+					{
+					     //check if this viewing has been authorized
+						if(userService.getViewAuthorization(ui.getUsername()))
+						{
+							    model.addAttribute("accessInfo", ui);
+								return "usrAccMgmt";
+						}
+						else
+						{
+							model.addAttribute("usernameerror","Currently not authorized to view");
+							return "usrAccMgmt";
+						}
+					}
+					else
+					{
+						model.addAttribute("usernameerror", "Not a valid external user");
+						return "usrAccMgmt";
+					}
+				}
+			}
 		}
-		model.addAttribute("userInfoObj", userService.getUserInfo(userInfo));
-		return "usrAccMgmt";
+		else
+		{
+			model.addAttribute("usernameerror","Please enter the username");
+			return "usrAccMgmt";
+		}
+			
+
 	}
 	
-	//Author: Sravya
-	
-	//VIEW
-	@RequestMapping(value="/UserAccountManagement",method=RequestMethod.GET)
-	public String viewUserAccessInfo(Model model)
+	//Edit External Users
+	@RequestMapping(value="/EditExtProfile",method=RequestMethod.GET)
+	public String editExtProfile(Model model)
 	{
 		model.addAttribute("accessInfo", new Userinfo());
-		return "usrAccMgmt";
+		model.addAttribute("usernameerror",null);
+		model.addAttribute("addresserror",null);
+		model.addAttribute("editRequestMsg",null);
+		return "editExtProfile";
 	}
 	
-/*	@RequestMapping(value="/usrAccMgmtAccess",method=RequestMethod.POST)
-	public String viewUserAccessInfo(@ModelAttribute ("accessInfo")Userinfo userInfo, BindingResult result, SessionStatus status,Model model)
+	@RequestMapping(value="/EditExtProfile",method=RequestMethod.POST)
+	public String editExtProfile(@ModelAttribute ("accessInfo") @Validated Userinfo userInfo, BindingResult result, SessionStatus status,Model model)
 	{
-		System.out.println(userInfo.getIdentificationid() + userInfo.getUsername());
-		if(result.hasErrors()||userService.getUserInfo(userInfo)==null)
+		//add objects to model
+		model.addAttribute("accessInfo", userInfo);
+		model.addAttribute("usernameerror",null);
+		model.addAttribute("addresserror",null);
+		model.addAttribute("editRequestMsg",null);
+		//validate input format
+		if(userInfo.getUsername()!=null)
 		{
-			System.out.println("error");
-			return "internalHome";
+			//On clicking edit accept
+			if(userInfo.getEmail()!=null)
+			{
+			       Userinfo ui = userService.getUserInfobyUserName(userInfo.getUsername()); 
+			       if(userInfo.getAddress()!=null){
+			       if(!(userInfo.getAddress()).matches("^[a-zA-Z0-9_#]*$"))
+					{
+						model.addAttribute("addresserror","Please enter a valid address having characters numbers and #");
+						return "editExtProfile";
+					}
+			       }
+			       if(userInfo.getAddress() != ui.getAddress())
+				    {
+				    	ui.setAddress(userInfo.getAddress());
+				    }
+			       userService.updateUserInfo(ui);
+			      model.addAttribute("accessInfo", new Userinfo());
+			      model.addAttribute("editRequestMsg", "Edit Request Approved!");
+			      return "editExtProfile";
+			}
+			if(!(userInfo.getUsername()).matches("^[a-z0-9_-]{3,16}$"))
+			{
+				model.addAttribute("usernameerror","Please enter a valid username");
+				return "editExtProfile";
+			}
+			else
+			{
+				//validate if reasonable request and username exists
+				if(userService.getUserInfobyUserName(userInfo.getUsername())==null)
+				{
+					model.addAttribute("usernameerror","Specified username does not exist");
+					return "editExtProfile";
+				}
+				else
+				{
+					Userinfo ui = userService.getUserInfobyUserName(userInfo.getUsername());
+					//check if the user is an external user
+					String ur = userService.getUserRoleType(ui.getUsername());
+					if(ur.equals("ROLE_CUSTOMER")||ur.equals("ROLE_MERCHANT"))
+					{
+						String address = userService.getEditAuthorization(ui.getUsername());        
+						//check if this edit has been authorized
+						if(address != null)
+						{
+							    ui.setAddress(address);
+							    model.addAttribute("accessInfo", ui);
+								return "editExtProfile";
+						}
+						else
+						{
+							model.addAttribute("usernameerror","Currently not authorized to edit");
+							return "editExtProfile";
+						}
+					}
+					else
+					{
+						model.addAttribute("usernameerror", "Not a valid customer");
+						return "editExtProfile";
+					}
+				}
+			}
 		}
-		model.addAttribute("userInfoObj", userService.getUserInfo(userInfo));
-		return "usrAccMgmtAccessForm";
-	}*/
-	
-	@RequestMapping(value="/UserAccountManagement",method=RequestMethod.POST)
-	public String viewUserInfo(@ModelAttribute ("accessInfo")Userinfo userInfo, BindingResult result, SessionStatus status,Model model)
+		else
+		{
+			model.addAttribute("usernameerror","Please enter the username");
+			return "editExtProfile";
+		}
+			
+
+	}
+
+	@RequestMapping(value="/RejectUpdate",method=RequestMethod.POST)
+	public String rejectEditExtProfile(@ModelAttribute ("accessInfo") @Validated Userinfo userInfo, BindingResult result, SessionStatus status,Model model)
 	{
-		model.addAttribute("accessInfo", userService.getUserInfo(userInfo));
-		if(result.hasErrors()||userService.getUserInfo(userInfo)==null)
-		{
-			System.out.println("error");
-			return "internalHome";
-		}
-		model.addAttribute("userInfoObj", userService.getUserInfo(userInfo));
-		return "usrAccMgmt";
+		model.addAttribute("accessInfo", new Userinfo());
+		model.addAttribute("editRequestMsg", "Edit Request Rejected!");
+		return "editExtProfile";
 	}
-	
-	}
-	
 	//EDIT
 	@RequestMapping(value="/UserAccountManagementEdit",method=RequestMethod.GET)
 	public String updateUserInfo(Model model)
@@ -271,5 +336,212 @@ public class UserController {
 		   userService.deleteUserInfo(ui);
 		   return "usrAccMgmtDeleteMessage";
 		}
+	}
+
+	//-------------Admin functionality 
+	//View Employees
+	@RequestMapping(value="/ViewEmpProfile",method=RequestMethod.GET)
+	public String viewEmpProfile(Model model)
+	{
+		model.addAttribute("accessInfo", new Userinfo());
+		return "viewEmpProfile";
+	}
+	
+	@RequestMapping(value="/ViewEmpProfile",method=RequestMethod.POST)
+	public String viewEmpProfile(@ModelAttribute ("accessInfo") @Validated Userinfo userInfo, BindingResult result, SessionStatus status,Model model)
+	{
+		//add objects to model
+		model.addAttribute("accessInfo", userInfo);
+		model.addAttribute("usernameerror",null);
+		//validate input format
+		if(userInfo.getUsername()!=null)
+		{
+			if(!(userInfo.getUsername()).matches("^[a-z0-9_-]{3,16}$"))
+			{
+				model.addAttribute("usernameerror","Please enter a valid username");
+				return "viewEmpProfile";
+			}
+			else
+			{
+				//validate if reasonable request and username exists
+				if(userService.getUserInfobyUserName(userInfo.getUsername())==null)
+				{
+					model.addAttribute("usernameerror","Specified username does not exist");
+					return "viewEmpProfile";
+				}
+				else
+				{
+					Userinfo ui = userService.getUserInfobyUserName(userInfo.getUsername());
+					//check if the user is an external user
+					String ur = userService.getUserRoleType(ui.getUsername());
+					if(ur.equals("ROLE_EMPLOYEE"))
+					{
+                                model.addAttribute("accessInfo", ui);
+								return "viewEmpProfile";
+					}
+					else
+					{
+						model.addAttribute("usernameerror", "Not a valid employee");
+						return "viewEmpProfile";
+					}
+				}
+			}
+		}
+		else
+		{
+			model.addAttribute("usernameerror","Please enter the username");
+			return "viewEmpProfile";
+		}
+			
+
+	}
+	
+	//Edit Employees
+	@RequestMapping(value="/EditEmpProfile",method=RequestMethod.GET)
+	public String editEmpProfile(Model model)
+	{
+		model.addAttribute("accessInfo", new Userinfo());
+		return "editEmpProfile";
+	}
+	
+	@RequestMapping(value="/EditEmpProfile",method=RequestMethod.POST)
+	public String editEmpProfile(@ModelAttribute ("accessInfo") @Validated Userinfo userInfo, BindingResult result, SessionStatus status,Model model)
+	{
+		//add objects to model
+		model.addAttribute("accessInfo", userInfo);
+		model.addAttribute("usernameerror",null);
+		model.addAttribute("addresserror",null);
+		//validate input format
+		if(userInfo.getUsername()!=null)
+		{
+			if(userInfo.getEmail()!=null)
+			{
+			       Userinfo ui = userService.getUserInfobyUserName(userInfo.getUsername()); 
+			       if(userInfo.getAddress()!=null){
+			       if(!(userInfo.getAddress()).matches("^[a-zA-Z0-9_#]*$"))
+					{
+						model.addAttribute("addresserror","Please enter a valid address having characters numbers and #");
+						return "editEmpProfile";
+					}
+			       }
+			       if(userInfo.getAddress() != ui.getAddress())
+				    {
+				    	ui.setAddress(userInfo.getAddress());
+				    }
+			       userService.updateUserInfo(ui);
+			      model.addAttribute("accessInfo", userService.getUserInfobyUserName(userInfo.getUsername()));
+			      return "editEmpProfile";
+			}
+			if(!(userInfo.getUsername()).matches("^[a-z0-9_-]{3,16}$"))
+			{
+				model.addAttribute("usernameerror","Please enter a valid username");
+				return "editEmpProfile";
+			}
+			else
+			{
+				//validate if reasonable request and username exists
+				if(userService.getUserInfobyUserName(userInfo.getUsername())==null)
+				{
+					model.addAttribute("usernameerror","Specified username does not exist");
+					return "editEmpProfile";
+				}
+				else
+				{
+					Userinfo ui = userService.getUserInfobyUserName(userInfo.getUsername());
+					//check if the user is an external user
+					String ur = userService.getUserRoleType(ui.getUsername());
+					if(ur.equals("ROLE_EMPLOYEE"))
+					{
+                                model.addAttribute("accessInfo", ui);
+								return "editEmpProfile";
+					}
+					else
+					{
+						model.addAttribute("usernameerror", "Not a valid employee");
+						return "editEmpProfile";
+					}
+				}
+			}
+		}
+		else
+		{
+			model.addAttribute("usernameerror","Please enter the username");
+			return "viewEmpProfile";
+		}
+			
+
+	}
+	
+	//Delete Employees
+	@RequestMapping(value="/DeleteEmpProfile",method=RequestMethod.GET)
+	public String deleteEmpProfile(Model model)
+	{
+		model.addAttribute("accessInfo", new Userinfo());
+		return "deleteEmpProfile";
+	}
+	
+	@RequestMapping(value="/DeleteEmpProfile",method=RequestMethod.POST)
+	public String deleteEmpProfile(@ModelAttribute ("accessInfo") @Validated Userinfo userInfo, BindingResult result, SessionStatus status,Model model)
+	{
+		//add objects to model
+		model.addAttribute("accessInfo", userInfo);
+		model.addAttribute("usernameerror",null);
+		model.addAttribute("deleteMessage",null);
+		//validate input format
+		if(userInfo.getUsername()!=null)
+		{
+			if(!(userInfo.getUsername()).matches("^[a-z0-9_-]{3,16}$"))
+			{
+				model.addAttribute("usernameerror","Please enter a valid username");
+				return "deleteEmpProfile";
+			}
+			else
+			{
+				//validate if reasonable request and username exists
+				if(userService.getUserInfobyUserName(userInfo.getUsername())==null)
+				{
+					model.addAttribute("usernameerror","Specified username does not exist");
+					return "deleteEmpProfile";
+				}
+				else
+				{
+					Userinfo ui = userService.getUserInfobyUserName(userInfo.getUsername());
+					if(!(userInfo.getEmail()==null))
+						{
+						   userService.deleteUserInfo(ui);
+						   model.addAttribute("deleteMessage","Delete Successfull!");
+						   return "deleteEmpProfile";
+						}
+					//check if the user is an external user
+					String ur = userService.getUserRoleType(ui.getUsername());
+					if(ur.equals("ROLE_EMPLOYEE"))
+					{
+                                model.addAttribute("accessInfo", ui);
+								return "deleteEmpProfile";
+					}
+					else
+					{
+						model.addAttribute("usernameerror", "Not a valid employee");
+						return "deleteEmpProfile";
+					}
+				}
+			}
+		}
+		else
+		{
+			model.addAttribute("usernameerror","Please enter the username");
+			return "viewEmpProfile";
+		}
+			
+
+	}
+	
+	//-------------TransactionManagement
+	//View Transaction management tabs
+	@RequestMapping(value="/TransactionManagement",method=RequestMethod.GET)
+	public String transMgmtTab(Model model)
+	{
+		model.addAttribute("accessInfo", new Userinfo());
+		return "internalHomeTrans";
 	}
 }

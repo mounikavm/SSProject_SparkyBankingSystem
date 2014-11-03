@@ -6,19 +6,27 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
-
 	<http use-expressions="true">
+	
 		<intercept-url pattern="/resources/**" access="permitAll"/>
 		<intercept-url pattern="/logout" access="permitAll"/>
 		<intercept-url pattern="/login" access="permitAll"/>
 		<intercept-url pattern="/forgotpassword" access="permitAll"/>
 		<intercept-url pattern="/loginFailed" access="permitAll"/>
+		
+		<intercept-url pattern="/EditExtProfile" access="hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')"/>
+		<intercept-url pattern="/RejectUpdate" access="hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')"/>
+		<intercept-url pattern="/ViewEmpProfile" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/EditEmpProfile" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/DeleteEmpProfile" access="hasRole('ROLE_ADMIN')"/>
 		<intercept-url pattern="/viewTransactions" access="hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')"/>
 		<intercept-url pattern="/UserAccountManagement" access="hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')"/>
 		<intercept-url pattern="/UserAccountManagementEdit" access="hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')"/>
 		<intercept-url pattern="/UserAccountManagementDelete" access="hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')"/>
 		<intercept-url pattern="/UserAccountManagementActivity" access="hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')"/>
 		<intercept-url pattern="/usrAccMgmtAccess" access="hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')"/>
+		<intercept-url pattern="/TransactionManagement" access="hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')"/>
+		
 		<intercept-url pattern="/int**" access="hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')"/>
 		<intercept-url pattern="/register" access="hasRole('ROLE_ADMIN')"/>
 		<intercept-url pattern="/extHome" access="hasRole('ROLE_MERCHANT')"/>
