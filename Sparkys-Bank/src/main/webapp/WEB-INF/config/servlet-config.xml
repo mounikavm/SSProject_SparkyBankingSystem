@@ -70,6 +70,9 @@
 		<property name="prefix" value="/WEB-INF/jsps/" />
 		<property name="suffix" value=".jsp"></property>
 	</bean>
+	<bean id="recaptcha" class="net.tanesha.recaptcha.ReCaptchaImpl">
+		<property name="privateKey" value="6Lei9PwSAAAAAIz4E_U0NGrJMbS91HLoafoqBZGi"/>
+	</bean>
 	
 	<bean id="userValidator" class="com.group10.sparkysbank.validator.UserValidator"></bean>
 	<!-- <bean id="userService" class="com.group10.sparkysbank.dao.UserDaoImpl"> 

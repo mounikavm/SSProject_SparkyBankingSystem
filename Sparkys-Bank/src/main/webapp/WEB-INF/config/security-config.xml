@@ -23,6 +23,11 @@
 		<intercept-url pattern="/register" access="hasRole('ROLE_ADMIN')"/>
 		<intercept-url pattern="/extHome" access="hasRole('ROLE_MERCHANT')"/>
 		<intercept-url pattern="/addExtUser" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/transfer" access="hasAnyRole('ROLE_CUSTOMER','ROLE_MERCHANT')"/>
+		<intercept-url pattern="/credit" access="hasAnyRole('ROLE_CUSTOMER','ROLE_MERCHANT')"/>
+		<intercept-url pattern="/debit" access="hasAnyRole('ROLE_CUSTOMER','ROLE_MERCHANT')"/>
+		<intercept-url pattern="/hello1" access="hasAnyRole('ROLE_CUSTOMER','ROLE_MERCHANT')"/>
+		<intercept-url pattern="/extCustomerHome" access="hasRole('ROLE_CUSTOMER')"/>
 		<intercept-url pattern="/hello" access="permitAll"/>
 		<intercept-url pattern="/403" access="permitAll" />
 		<intercept-url pattern="/**" access="denyAll" />

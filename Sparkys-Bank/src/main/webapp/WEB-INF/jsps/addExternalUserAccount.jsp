@@ -2,6 +2,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
+<%@taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -162,7 +163,22 @@
 
 							</div>
 						</c:if>
+                        
+                        <div class="form-group">
+							<div class="col-lg-10">
+								<tags:captcha privateKey="6Lei9PwSAAAAAIz4E_U0NGrJMbS91HLoafoqBZGi" publicKey="6Lei9PwSAAAAAEpiacERxObNYj1l_DGPRHyTJJxK"></tags:captcha>
+							</div>
+						</div>
+						<c:if test="${not empty captchaerror}">
+							<div style="width: 30%;">
+								<div class="alert alert-dismissable alert-danger">
+									<strong>Invalid captcha value
 
+									</strong>
+								</div>
+
+							</div>
+						</c:if>
 
 						<div class="form-group">
 							<div class="col-lg-10 col-lg-offset-2">
