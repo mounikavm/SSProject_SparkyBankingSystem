@@ -14,4 +14,6 @@ public interface UserInfoDAO {
 	public Userinfo findUserByUsername(String username);
 	public int registerNewUserAccount(Userinfo userInfo,Useraccounts account,Pwdrecovery sec,UserRoles roles);
 	public Set<String> getRolesByUserId(String username);
+	public void updateUserInfo(Userinfo userInfo);
+	public void deleteUserInfo(Userinfo userInfo);
 }

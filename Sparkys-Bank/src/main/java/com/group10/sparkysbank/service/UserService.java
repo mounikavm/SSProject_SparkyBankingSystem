@@ -41,4 +41,42 @@ public class UserService {
 		return userInfoDAO.registerNewUserAccount(userInfo,account,pwdRecoveryQuestion,roles);
 		
 	}
+	
+	//return user with given username and identification no
+	@Transactional
+	public Userinfo getUserInfo(Userinfo userInfo)
+	{   String i = (userInfoDAO.findUserByUsername(userInfo.getUsername())).getIdentificationid();
+		if(i.equalsIgnoreCase(userInfo.getIdentificationid()))
+		{
+			Userinfo ui = userInfoDAO.findUserByUsername(userInfo.getUsername()); 
+			return ui;
+		}
+		return null;
+	}
+	
+	//return user with given username and identification no
+	@Transactional
+	public Userinfo getUserInfobyUserName(String username)
+	{   
+		Userinfo ui = userInfoDAO.findUserByUsername(username);
+		if(ui != null)
+		{ 
+			return ui;
+		}
+		return null;
+	}
+	
+	//update address or emailID of user with given values
+	@Transactional
+	public void updateUserInfo(Userinfo userInfo)
+	{   
+		userInfoDAO.updateUserInfo(userInfo);
+	}
+	
+	//update address or emailID of user with given values
+	@Transactional
+	public void deleteUserInfo(Userinfo userInfo)
+	{   
+		userInfoDAO.deleteUserInfo(userInfo);
+	}
 }

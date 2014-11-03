@@ -5,9 +5,11 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -59,5 +61,36 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 		}
 		return role;
 	}
+	
+	public void updateUserInfo(Userinfo userInfo)
+	{
+		 Session session = sessionFactory.openSession();
+	      Transaction tx = null;
+	      try{
+	         tx = session.beginTransaction();
+			 session.update(userInfo); 
+	         tx.commit();
+	      }catch (HibernateException e) {
+	         if (tx!=null) tx.rollback();
+	         e.printStackTrace(); 
+	      }finally {
+	         session.close(); 
+	      }
+	}
 
+	public void deleteUserInfo(Userinfo userInfo)
+	{
+		 Session session = sessionFactory.openSession();
+	      Transaction tx = null;
+	      try{
+	         tx = session.beginTransaction();
+			 session.delete(userInfo); 
+	         tx.commit();
+	      }catch (HibernateException e) {
+	         if (tx!=null) tx.rollback();
+	         e.printStackTrace(); 
+	      }finally {
+	         session.close(); 
+	      }
+	}
 }
