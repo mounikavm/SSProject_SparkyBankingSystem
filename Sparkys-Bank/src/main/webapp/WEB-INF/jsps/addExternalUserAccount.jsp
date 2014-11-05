@@ -138,6 +138,15 @@
 								</select>
 							</div>
 						</div>
+							<div class="form-group">
+							<label for="select" class="col-lg-2 control-label">Role</label>
+							<div class="col-lg-10">
+								<select name="role" class="form-control" id="select">
+								<option value="ROLE_CUSTOMER">Customer</option>
+								<option value="ROLE_MERCHANT">Merchant</option>
+								</select>
+							</div>
+						</div>
 						<div class="form-group">
 							<label class="col-lg-2 control-label">Answer</label>
 							<div class="col-lg-10">

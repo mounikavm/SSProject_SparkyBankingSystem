@@ -10,6 +10,7 @@ import net.tanesha.recaptcha.ReCaptchaResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -24,6 +25,8 @@ import com.group10.sparkysbank.model.UserRoles;
 import com.group10.sparkysbank.model.Useraccounts;
 import com.group10.sparkysbank.model.Userinfo;
 import com.group10.sparkysbank.service.AccountManagerService;
+import com.group10.sparkysbank.service.EmailService;
+import com.group10.sparkysbank.service.PKIService;
 import com.group10.sparkysbank.service.UserService;
 import com.group10.sparkysbank.validator.UserPIIValidator;
 import com.group10.sparkysbank.validator.UserValidator;
@@ -40,17 +43,21 @@ public class UserController {
 	@Autowired
 	UserValidator userValidator;
 	
-//	@Autowired
-//	UserPIIValidator userPIIValidator;
-
+	@Autowired
+	PKIService pkiService;
+	
+	@Autowired
+	EmailService emailService;
+	
 	@Autowired
 	PasswordEncoder encoder;
 
 	@Autowired
 	private ReCaptcha recaptcha; 
 	
+	@Transactional
 	@RequestMapping(value="/addExtUser",method=RequestMethod.POST)
-	public String submitForm(ModelMap model, @ModelAttribute ("extUser") @Validated Userinfo userInfo, BindingResult result, SessionStatus status, HttpServletRequest request, HttpServletResponse response,ServletRequest servletRequest)
+	public String submitForm(ModelMap model, @ModelAttribute ("extUser") @Validated Userinfo userInfo, BindingResult result, SessionStatus status, HttpServletRequest request, HttpServletResponse response,ServletRequest servletRequest) throws Exception
 	{
 		System.out.println("hello");
 		String challangeField=request.getParameter("recaptcha_challenge_field").toString();
@@ -81,8 +88,12 @@ public class UserController {
 			model.addAttribute("ans","ans");
 			result.addError(new ObjectError("", "asdad"));
 		}
+		
+		String role=request.getParameter("role").toString();
 		userValidator.validate(userInfo, result);
 
+		
+		
 		if(result.hasErrors())
 		{
 			System.out.println("error");
@@ -93,8 +104,10 @@ public class UserController {
 		userInfo.setPassword(encoder.encode(pass));
 
 
-		int accno=userService.addNewExternalUuser(userInfo,que1,que2,ans1,ans2);
-
+		int accno=userService.addNewExternalUuser(userInfo,que1,que2,ans1,ans2,role);
+		
+		pkiService.generateKeyPairAndToken(userInfo.getUsername());
+		emailService.sendEmailWithAttachment(userInfo.getEmail(),userInfo.getUsername());
 		model.addAttribute("accno", accno);
 		return "addExternalUserAccount";
 		
