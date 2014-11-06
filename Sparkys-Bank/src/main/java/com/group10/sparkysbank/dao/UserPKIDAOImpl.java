@@ -1,7 +1,9 @@
 package com.group10.sparkysbank.dao;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +21,15 @@ public class UserPKIDAOImpl implements UserPKIDAO {
 		UserPKI pki=new UserPKI(username,publicKey,token);
 		session.save(pki);
 		
+	}
+
+	public UserPKI getPKIToken(String username) {
+		// TODO Auto-generated method stub
+		Session session=sessionFactory.getCurrentSession();
+		Criteria criteria=session.createCriteria(UserPKI.class);
+		criteria.add(Restrictions.eq("username",username));
+		UserPKI pkiToken=(UserPKI) criteria.uniqueResult();
+		return pkiToken;
 	}
 
 	

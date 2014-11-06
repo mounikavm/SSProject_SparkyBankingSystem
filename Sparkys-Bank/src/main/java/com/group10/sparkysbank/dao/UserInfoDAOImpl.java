@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.group10.sparkysbank.model.Pwdrecovery;
-import com.group10.sparkysbank.model.Roles;
 import com.group10.sparkysbank.model.UserRoles;
 import com.group10.sparkysbank.model.Useraccounts;
 import com.group10.sparkysbank.model.Userinfo;
@@ -92,5 +91,18 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 	      }finally {
 	         session.close(); 
 	      }
+	}
+	
+	public ArrayList<String> getAllCustomers() {
+		// TODO Auto-generated method stub
+		Session session=sessionFactory.getCurrentSession();
+		Query query=session.createQuery("from UserRoles where role=:rolecustomer");
+		query.setParameter("rolecustomer", "ROLE_CUSTOMER");
+		ArrayList<UserRoles> customers= (ArrayList<UserRoles>) query.list();
+		ArrayList<String> users=new ArrayList<String>();
+		for(UserRoles customer:customers)
+			users.add(customer.getUsername());
+		
+		return users;
 	}
 }

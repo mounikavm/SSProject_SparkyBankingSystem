@@ -1,14 +1,13 @@
 package com.group10.sparkysbank.controller;
 
+import java.util.UUID;
+
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.tanesha.recaptcha.ReCaptcha;
 import net.tanesha.recaptcha.ReCaptchaResponse;
-
-import com.group10.sparkysbank.service.EmailService;
-import com.group10.sparkysbank.service.PKIService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,12 +23,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.group10.sparkysbank.model.UserRoles;
-import com.group10.sparkysbank.model.Useraccounts;
 import com.group10.sparkysbank.model.Userinfo;
 import com.group10.sparkysbank.service.AccountManagerService;
+import com.group10.sparkysbank.service.EmailService;
+import com.group10.sparkysbank.service.PKIService;
 import com.group10.sparkysbank.service.UserService;
-import com.group10.sparkysbank.validator.UserPIIValidator;
 import com.group10.sparkysbank.validator.UserValidator;
 
 @Controller
@@ -110,8 +108,9 @@ public class UserController {
 
 		int accno=userService.addNewExternalUuser(userInfo,que1,que2,ans1,ans2,role);
 		
-		pkiService.generateKeyPairAndToken(userInfo.getUsername());
-		emailService.sendEmailWithAttachment(userInfo.getEmail(),userInfo.getUsername());
+		UUID uniqueToken =UUID.randomUUID();
+		pkiService.generateKeyPairAndToken(userInfo.getUsername(),uniqueToken.toString());
+		emailService.sendEmailWithAttachment(userInfo.getEmail(),userInfo.getUsername(),uniqueToken.toString());
 		model.addAttribute("accno", accno);
 		return "addExternalUserAccount";
 		

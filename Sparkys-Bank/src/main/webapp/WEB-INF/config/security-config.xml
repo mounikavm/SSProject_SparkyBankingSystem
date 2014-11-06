@@ -32,6 +32,12 @@
 		<intercept-url pattern="/UserAccountManagementActivity" access="hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')"/>
 		<intercept-url pattern="/usrAccMgmtAccess" access="hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')"/>
 		<intercept-url pattern="/TransactionManagement" access="hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')"/>
+			<intercept-url pattern="/verifyMerchant" access="hasRole('ROLE_CUSTOMER')"/>
+		<intercept-url pattern="/paymentSubmitted" access="hasRole('ROLE_MERCHANT')"/>
+		<intercept-url pattern="/paymentsFromMerchant" access="hasRole('ROLE_CUSTOMER')"/>
+			<intercept-url pattern="/submitPayment" access="hasRole('ROLE_MERCHANT')"/>
+		<intercept-url pattern="/approvedTransactions" access="hasRole('ROLE_MERCHANT')"/>
+		<intercept-url pattern="/verifyCustomer" access="hasRole('ROLE_MERCHANT')"/>
 		
 		<intercept-url pattern="/int**" access="hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')"/>
 		<intercept-url pattern="/register" access="hasRole('ROLE_ADMIN')"/>

@@ -17,46 +17,52 @@
 <body>
 
 
-<form class="form-horizontal">
-  <fieldset>
-   
-    <div class="form-group">
-      <label for="inputEmail" class="col-lg-2 control-label">Card Holder's Name</label>
-      <div class="col-lg-10">
-        <input type="text" class="form-control" id="inputEmail" placeholder="Name">
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="inputPassword" class="col-lg-2 control-label">Card Number</label>
-      <div class="col-lg-10">
-        <input type="text" class="form-control" id="inputPassword" placeholder="Number">
-        
-      </div>
-    </div>
-    
-    <div class="form-group">
-      <label for="inputEmail" class="col-lg-2 control-label">Enter Amount</label>
-      <div class="col-lg-10">
-        <input type="text" class="form-control" id="inputEmail" placeholder="Amount">
-      </div>
-    </div>
-    
-    <div class="form-group">
-      <label for="inputEmail" class="col-lg-2 control-label">Enter Service</label>
-      <div class="col-lg-10">
-        <input type="text" class="form-control" id="inputEmail" placeholder="Service">
-      </div>
-    </div>
-    
-    <div class="form-group">
-      <div class="col-lg-10 col-lg-offset-2">
-        <button class="btn btn-default">Cancel</button>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </div>
-    </div>
-  </fieldset>
-</form>
+	<form class="form-horizontal" action="/Sparkys-Bank/paymentSubmitted" method="post">
+		<fieldset>
+			<div style="width: 50%;">
+				<div class="form-group">
+					<label for="inputEmail" class="col-lg-2 control-label">Customer</label>
+					<div class="col-lg-10">
+						<select name="user">
+							<c:forEach var="user" items="${users}">
+								<option>${user}</option>
+
+							</c:forEach>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputPassword" class="col-lg-2 control-label">Amount</label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" name="amount"
+							placeholder="Amount">
+
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="inputPassword" class="col-lg-2 control-label">Encrypted
+						Token</label>
+					<div class="col-lg-10">
+						<textarea rows="4" cols="10" class="form-control" name="token"></textarea>
+
+					</div>
+				</div>
+
+
+			</div>
+
+
+			<div class="form-group">
+				<div class="col-lg-10 col-lg-offset-2">
+					
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</div>
+			</div>
+		</fieldset>
+	</form>
 
 
 </body>
+
 </html>

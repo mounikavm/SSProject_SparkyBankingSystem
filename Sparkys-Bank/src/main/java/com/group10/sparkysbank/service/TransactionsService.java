@@ -1,13 +1,16 @@
 package com.group10.sparkysbank.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.group10.sparkysbank.dao.PKITransactionDAO;
 import com.group10.sparkysbank.dao.TransactionsDao;
 import com.group10.sparkysbank.dao.UseraccountsDao;
+import com.group10.sparkysbank.model.PKITransaction;
 import com.group10.sparkysbank.model.Transactions;
 
 @Service("transactionsService ")
@@ -19,6 +22,9 @@ public class TransactionsService {
 	@Autowired
 	UseraccountsDao useraccountsDAO;
 
+	@Autowired
+	PKITransactionDAO pkiTransactionDAO;
+	
 	@Transactional
 	public Transactions viewTransaction(int transid)
 	{
@@ -82,5 +88,10 @@ public class TransactionsService {
 			}
 		}
 		return message;
+	}
+	
+	@Transactional
+	public ArrayList<PKITransaction> getPKITransactionsForCustomer(String username){
+		return pkiTransactionDAO.getTransactionForCustomer(username);
 	}
 }

@@ -19,6 +19,8 @@ import javax.mail.internet.MimeMultipart;
 
 import org.springframework.stereotype.Service;
 
+import com.group10.sparkysbank.service.EmailService;
+
 @Service("emailService")
 public class EmailServiceImpl implements EmailService {
 	/*
@@ -64,7 +66,7 @@ public class EmailServiceImpl implements EmailService {
 		}
 	}
 	
-	public boolean sendEmailWithAttachment(String emailId,String username)
+	public boolean sendEmailWithAttachment(String emailId,String username,String token)
 	{
 		Properties props = new Properties();
 		props.put("mail.smtp.host", "smtp.gmail.com");
@@ -92,7 +94,7 @@ public class EmailServiceImpl implements EmailService {
 		                                  new InternetAddress(emailId));
 		         message.setSubject("This is the Subject Line!");
 		         BodyPart messageBodyPart = new MimeBodyPart();
-		         messageBodyPart.setText("This is message body");
+		         messageBodyPart.setText("This is your token have fun!!   "+token);
 		         Multipart multipart = new MimeMultipart();
 
 		         multipart.addBodyPart(messageBodyPart);
@@ -113,7 +115,8 @@ public class EmailServiceImpl implements EmailService {
 		}
 
 		return false;
+
 	}
-	
-	
 }
+	
+	
