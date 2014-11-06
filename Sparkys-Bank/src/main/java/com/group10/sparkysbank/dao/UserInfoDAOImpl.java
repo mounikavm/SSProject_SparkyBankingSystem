@@ -104,4 +104,25 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 		
 		return users;
 	}
+
+	public boolean isFirstLogin(String name) {
+		// TODO Auto-generated method stub
+		Session session=sessionFactory.getCurrentSession();
+		Criteria criteria=session.createCriteria(Userinfo.class);
+		criteria.add(Restrictions.eq("username", name));
+		Userinfo user=(Userinfo)criteria.uniqueResult();
+		if(user==null)
+			return false;
+		return !user.isEnable();
+	}
+
+	public void enableUser(String userName) {
+		// TODO Auto-generated method stub
+		Session session=sessionFactory.getCurrentSession();
+		Criteria criteria=session.createCriteria(Userinfo.class);
+		criteria.add(Restrictions.eq("username", userName));
+		Userinfo user=(Userinfo)criteria.uniqueResult();
+		user.setEnable(true);
+		session.update(user);
+	}
 }

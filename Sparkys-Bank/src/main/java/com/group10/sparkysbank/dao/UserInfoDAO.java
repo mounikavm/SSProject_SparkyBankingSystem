@@ -17,5 +17,7 @@ public interface UserInfoDAO {
 	public void updateUserInfo(Userinfo userInfo);
 	public void deleteUserInfo(Userinfo userInfo);
 	public ArrayList<String> getAllCustomers();
+	public boolean isFirstLogin(String name);
+	public void enableUser(String userName);
 
 }

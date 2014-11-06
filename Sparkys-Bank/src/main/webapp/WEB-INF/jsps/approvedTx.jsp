@@ -19,7 +19,7 @@ function authenticate(id){
 		url:"/Sparkys-Bank/verifyCustomer",
 		data:{id: transactionid, customer:customer},
 		success: function(data){
-			$().html(data);
+			location.reload();
 		}
 	}
 );

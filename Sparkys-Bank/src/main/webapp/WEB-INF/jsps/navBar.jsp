@@ -31,6 +31,7 @@
 						<sec:authorize ifAnyGranted="ROLE_ADMIN"><li><a href="/Sparkys-Bank/ViewEmpProfile">View Emp</a></li></sec:authorize>
                         <sec:authorize ifAnyGranted="ROLE_ADMIN"><li><a href="/Sparkys-Bank/EditEmpProfile">Edit Emp</a></li></sec:authorize>
                         <sec:authorize ifAnyGranted="ROLE_ADMIN"><li><a href="/Sparkys-Bank/DeleteEmpProfile">Delete Emp</a></li></sec:authorize>
+						
 					</ul></li></sec:authorize>
 								<sec:authorize ifAnyGranted="ROLE_ADMIN"><li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown">Admin Specific Transaction Management<b class="caret"></b></a>

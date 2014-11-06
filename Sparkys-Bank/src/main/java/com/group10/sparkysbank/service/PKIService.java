@@ -103,25 +103,30 @@ public class PKIService {
 
 			String merchantToken=new String(decryptedText);
 			if(merchantToken.equals(pkiToken.getToken()))
+			{
 				System.out.println("authenticated");
-
-			else
-				System.out.println("not authenticated");
-		}
-		catch(Exception e){
+				return true;
+			}
+			else{
 				System.out.println("not authenticated");
 				return false;
+			}
+
 		}
-		return true;
+		catch(Exception e){
+			System.out.println("not authenticated");
+			return false;
+		}
+
 
 
 	}
-	
+
 	@Transactional
 	public void savePKITransaction(PKITransaction transaction){
 		pkiTransactionDAO.savePayment(transaction);
 	}
-	
+
 	@Transactional
 	public void updatePKITransaction(PKITransaction transaction){
 		pkiTransactionDAO.updatePayment(transaction);
@@ -161,16 +166,51 @@ public class PKIService {
 
 			String merchantToken=new String(decryptedText);
 			if(merchantToken.equals(pkiToken.getToken()))
+			{
 				System.out.println("authenticated");
-
-			else
-				System.out.println("not authenticated");
-		}
-		catch(Exception e){
+				return true;
+			}
+			else{
 				System.out.println("not authenticated");
 				return false;
+			}
+
 		}
-		return true;
+		catch(Exception e){
+			System.out.println("not authenticated");
+			return false;
+		}
+	}
+	@Transactional
+	public boolean authenticatePIIRequest(String username, String token) {
+		// TODO Auto-generated method stub
+		try{
+			UserPKI userPKI= userPKIDAO.getPKIToken(username);
+			byte[] publicKeyEncoded=userPKI.getPublickey();
+			PublicKey publicKey=KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(publicKeyEncoded));
+
+			Cipher rsa = Cipher.getInstance("RSA");
+			rsa.init(Cipher.DECRYPT_MODE, publicKey);
+			byte[] cipherTextBytes = org.bouncycastle.util.encoders.Base64.decode(token);
+			byte[] decryptedText = rsa.doFinal(cipherTextBytes);
+
+			String Token=new String(decryptedText);
+			if(Token.equals(userPKI.getToken()))
+			{
+				System.out.println("authenticated");
+				return true;
+			}
+			else{
+				System.out.println("not authenticated");
+				return false;
+			}
+
+		}
+		catch(Exception e){
+			System.out.println("not authenticated");
+			return false;
+		}
+
 
 	}
 }

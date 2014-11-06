@@ -43,6 +43,7 @@
 						<sec:authorize ifAnyGranted="ROLE_MERCHANT">
 							<li><a href="approvedTransactions">Check Approved Transactions</a></li>
 						</sec:authorize>
+						<li><a href="changePII">Change PII Information</a></li>
 						<li class="divider"></li>
 						<li class="dropdown-header">Dropdown header</li>
 						<li><a href="#">Separated link</a></li>

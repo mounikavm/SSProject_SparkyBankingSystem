@@ -15,17 +15,15 @@
 
 <script>
 	function authenticate(id){
-		alert(id);
 		var transactionid=document.getElementById(id).childNodes[1].innerHTML;
 		var merchant=document.getElementById(id).childNodes[3].innerHTML;
 		var customertoken=document.getElementById("customerToken"+id).value;
-		alert(merchant);
 		$.ajax({
 			type: "POST",
 			url:"/Sparkys-Bank/verifyMerchant",
 			data:{id: transactionid, merchant:merchant,customertoken:customertoken},
 			success: function(data){
-				window.location.reload();
+				location.reload();
 			}
 		}
 	);
