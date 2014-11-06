@@ -22,7 +22,7 @@ public class PKITransactionDAOImpl implements PKITransactionDAO {
 		// TODO Auto-generated method stub
 
 		Session session =sessionFactory.getCurrentSession();
-		session.update(transaction);
+		session.save(transaction);
 	}
 
 	public ArrayList<PKITransaction> getTransactionForCustomer(String username) {
@@ -54,6 +54,12 @@ public class PKITransactionDAOImpl implements PKITransactionDAO {
 
 		ArrayList<PKITransaction> list=(ArrayList<PKITransaction>) query.list();
 		return list;
+	}
+
+	public void updatePayment(PKITransaction transaction) {
+		// TODO Auto-generated method stub
+		Session session=sessionFactory.getCurrentSession();
+		session.update(transaction);
 	}
 
 }

@@ -79,23 +79,8 @@ public class UserController {
 			result.addError(new ObjectError("", "captchaerror"));
 			return "addExternalUserAccount";
 		 }
-		String que1=request.getParameter("sec1").toString();
-		String que2=request.getParameter("sec2").toString();
 
-		String ans1=request.getParameter("sec1ans").toString();
-		String ans2=request.getParameter("sec2ans").toString();
-		if(que1.equals(que2))
-		{
-			model.addAttribute("error", "error");
-			result.addError(new ObjectError("", "asda"));
-		}
-
-		if(ans1.equals("") || ans1==null || ans2.equals("") || ans2==null)
-		{
-			model.addAttribute("ans","ans");
-			result.addError(new ObjectError("", "asdad"));
-		}
-		
+				
 		String role=request.getParameter("role").toString();
 		userValidator.validate(userInfo, result);
 
@@ -114,7 +99,7 @@ public class UserController {
 		userInfo.setPassword(encoder.encode(decodedPwd));
 
 
-		int accno=userService.addNewExternalUuser(userInfo,que1,que2,ans1,ans2,role);
+		int accno=userService.addNewExternalUuser(userInfo,role);
 		
 		UUID uniqueToken =UUID.randomUUID();
 		pkiService.generateKeyPairAndToken(userInfo.getUsername(),uniqueToken.toString());

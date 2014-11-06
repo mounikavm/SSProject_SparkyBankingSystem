@@ -35,28 +35,21 @@ public class UserService {
 	AccountManagerService accountManagerService ;
 	
 	
-	public int addNewExternalUuser(Userinfo userInfo,String que1,String que2,String ans1,String ans2,String role)
+	public int addNewExternalUuser(Userinfo userInfo,String role)
 	{
 		
 		Useraccounts account=new Useraccounts();
 		account.setBalance(500.0);
 		account.setUsername(userInfo.getUsername());
 		
-		Pwdrecovery pwdRecoveryQuestion=new Pwdrecovery();
-		pwdRecoveryQuestion.setAns1(ans1);
-		pwdRecoveryQuestion.setAns2(ans2);
-		pwdRecoveryQuestion.setQuestion1(que1);
-		pwdRecoveryQuestion.setQuestion2(que2);
-		pwdRecoveryQuestion.setUsername(userInfo.getUsername());
 		
 		UserRoles roles=new UserRoles();
 		roles.setRole(role);
 		roles.setUsername(userInfo.getUsername());
 		
-		return userInfoDAO.registerNewUserAccount(userInfo,account,pwdRecoveryQuestion,roles);
+		return userInfoDAO.registerNewUserAccount(userInfo,account,roles);
 		
-	}
-	
+	}	
 	@Transactional
 
 	public boolean isUserPresent(String username)

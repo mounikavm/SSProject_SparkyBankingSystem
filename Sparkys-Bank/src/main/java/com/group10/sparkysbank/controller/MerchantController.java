@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import com.group10.sparkysbank.service.PKIService;
 @Controller
 public class MerchantController {
 
+	private static final Logger logger=Logger.getLogger(MerchantController.class);
 	@Autowired
 	MerchantService merchantService;
 	
@@ -27,6 +29,11 @@ public class MerchantController {
 	@RequestMapping("/submitPayment")
 	public String submitPayment(Model model)
 	{
+		if(logger.isDebugEnabled()){
+			logger.debug("Merchant submitted payment");
+		}
+		
+		logger.info("Merchant submitted payment");
 		ArrayList<String> customers= merchantService.getAllCustomers();
 		model.addAttribute("users", customers);
 		return "SubmitPayment";
@@ -79,7 +86,7 @@ public class MerchantController {
 			System.out.println("merchant authenticated");
 			transaction.setTransactionstatus("COMPLETED");
 		
-			pkiService.savePKITransaction(transaction);
+			pkiService.updatePKITransaction(transaction);
 		}
 
 		return "";
