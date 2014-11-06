@@ -29,37 +29,24 @@
 				<fieldset>
 					<legend>Forgot Password</legend>
 
+						<form:form action="forgotpassword" class="form-horizontal"
+				method="post" commandName="forgotpassword" name="forgotpassword" ModelAttribute="forgotpassword">
+				<fieldset>
+					<legend>${errorMessage}</legend>
+
+				<div id="enteredusername">
+					<label for="enteredusername" class="col-lg-2 control-label">Enter Username:</label>
+					<input type="text" name="enteredusername" id="enteredusername">
+					</div>
+					
 					<div class="form-group">
-						<label for="inputEmail" class="col-lg-2 control-label">Your
-							Email Id:</label>
-						<div class="col-lg-10">
-							<input type="text" class="form-control" id="inputEmail"
-								placeholder="Email">
+						<div class="col-lg-10 col-lg-offset-2">
+
+							<button type="submit" class="btn btn-primary">Next</button>
 						</div>
 					</div>
-					<div class="col-lg-10 col-lg-offset-2">
-						<a href="/Sparkys-Bank/" class="btn btn-primary">Next</a>
-					</div>
-					<c:if test="">
-						<div class="form-group">
-							<label for="inputEmail" class="col-lg-2 control-label">Your
-								Email Id:</label>
-							<div class="col-lg-10">
-								<input type="text" class="form-control" id="inputEmail"
-									placeholder="Email">
-							</div>
-						</div>
-					</c:if>
-					<c:if test="">
-						<div class="form-group">
-							<label for="inputEmail" class="col-lg-2 control-label">Your
-								Email Id:</label>
-							<div class="col-lg-10">
-								<input type="text" class="form-control" id="inputEmail"
-									placeholder="Email">
-							</div>
-						</div>
-					</c:if>
+				</fieldset>
+			</form:form>
 
 				</fieldset>
 			</div>

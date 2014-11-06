@@ -28,7 +28,7 @@
     </div>
   </fieldset>
    </form:form>
-   <label style="color:red">${editRequestMsg}</label>
+   <label style="color:red">${msg}</label>
    <div>
    <h4>Please note that only the Address information is editable</h4>
 	<form:form commandName="accessInfo" action="/Sparkys-Bank/EditExtProfile" method="post">

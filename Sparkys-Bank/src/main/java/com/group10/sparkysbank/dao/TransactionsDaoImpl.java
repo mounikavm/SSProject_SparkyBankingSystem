@@ -204,4 +204,25 @@ public class TransactionsDaoImpl implements TransactionsDao {
 		int count = transList.size();
 		return count;
 	}
+	
+	public int countOfReq(String type, int accno)
+	{
+		Session session=sessionFactory.getCurrentSession();
+		Query query=session.createQuery("from Transactions where status=:stat and fromAccount=:accno");
+		query.setParameter("stat", 2);
+		query.setParameter("accno", accno);
+		List<Transactions> transList = query.list(); 
+		List<Transactions> tL = null;
+		if(transList.size()!=0)
+		{
+		for (Transactions t : transList) {
+			if((t.getTransactionTypes()).contains(type))
+			{
+				tL.add(t);
+			}
+		}
+		}
+		int count = tL.size();
+		return count;
+	}
 }

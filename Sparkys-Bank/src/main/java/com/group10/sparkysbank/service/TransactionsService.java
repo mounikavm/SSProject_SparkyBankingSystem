@@ -91,6 +91,41 @@ public class TransactionsService {
 	}
 	
 	@Transactional
+	public String extUsrProfileEditReq(String username, String address)
+	{
+		String message = "No Action could be taken";
+		Transactions transaction = new Transactions();
+		transaction.setApprovalNeeded(1);
+		transaction.setStatus(2);
+		transaction.setTransactionTypes("TR_EDIT"+address);
+		int accno = 0;
+		int count = -1;
+		try {
+			accno = (useraccountsDAO.getAccountByUsername(username)).getAccountno();
+			//check if any other record exists with the same account no
+			count = transactionsDAO.countOfReq("TR_EDIT",accno);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(count!=0)
+			message="A pending edit request already exits. Please wait till it is considered.";
+		else {
+			if (accno != 0) {
+				transaction.setFromAccount(accno);
+				try {
+					transactionsDAO.createViewExtProfileTrans(transaction);
+					message = "Request to edit the user's profile forwarded. Please wait till approved.";
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return message;
+	}
+	
+	@Transactional
 	public ArrayList<PKITransaction> getPKITransactionsForCustomer(String username){
 		return pkiTransactionDAO.getTransactionForCustomer(username);
 	}

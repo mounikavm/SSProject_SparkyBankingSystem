@@ -24,4 +24,5 @@ public interface TransactionsDao {
 	public List<Transactions> getExtUserReqList(String role);
 	public void createViewExtProfileTrans(Transactions transactions)throws Exception;
 	public int countOfReqForAcc(String type, int accno);
+	public int countOfReq(String type, int accno);
 }

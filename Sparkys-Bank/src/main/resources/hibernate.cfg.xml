@@ -19,7 +19,8 @@
   <mapping class="com.group10.sparkysbank.model.Userinfo"/>
   <mapping class="com.group10.sparkysbank.model.UserRoles"/>
   <mapping class="com.group10.sparkysbank.model.UserPKI"/>
-    <mapping class="com.group10.sparkysbank.model.PKITransaction"/>
+  <mapping class="com.group10.sparkysbank.model.PKITransaction"/>
+  <mapping class="com.group10.sparkysbank.model.OneTimePad"/>
   
  </session-factory>
 </hibernate-configuration>
