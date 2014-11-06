@@ -4,6 +4,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +17,7 @@ import com.group10.sparkysbank.model.Transactions;
 import com.group10.sparkysbank.model.UserRoles;
 import com.group10.sparkysbank.model.Useraccounts;
 import com.group10.sparkysbank.model.Userinfo;
+import com.group10.sparkysbank.validator.FieldValidations;
 
 @Service("userService")
 public class UserService {
@@ -53,6 +55,38 @@ public class UserService {
 		
 		return userInfoDAO.registerNewUserAccount(userInfo,account,pwdRecoveryQuestion,roles);
 		
+	}
+	
+	@Transactional
+
+	public boolean isUserPresent(String username)
+
+	{
+
+	if(userInfoDAO.findUserByUsername(username)!=null) return true;
+
+	return false;
+
+	}
+
+	@Transactional
+
+	public void changePassword(String newPassword, String userName) throws Exception
+
+	{
+
+	FieldValidations.validateSpecialChars(newPassword, 4,8, "Password");
+
+	Userinfo userInfo = getUserInfobyUserName(userName);
+
+	if(userInfo == null)
+
+	throw new Exception("Invalid user name");
+
+	userInfo.setPassword(new BCryptPasswordEncoder().encode(newPassword));
+
+	updateUserInfo(userInfo);
+
 	}
 	
 	//return user with given username and identification no

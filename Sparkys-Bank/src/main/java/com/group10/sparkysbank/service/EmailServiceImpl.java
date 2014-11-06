@@ -1,6 +1,8 @@
 package com.group10.sparkysbank.service;
 
+import java.security.SecureRandom;
 import java.util.Properties;
+import java.util.Random;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -66,7 +68,7 @@ public class EmailServiceImpl implements EmailService {
 		}
 	}
 	
-	public boolean sendEmailWithAttachment(String emailId,String username,String token)
+	public boolean sendEmailWithAttachment(String emailId,String username,String decodedPwd, String token)
 	{
 		Properties props = new Properties();
 		props.put("mail.smtp.host", "smtp.gmail.com");
@@ -94,7 +96,7 @@ public class EmailServiceImpl implements EmailService {
 		                                  new InternetAddress(emailId));
 		         message.setSubject("This is the Subject Line!");
 		         BodyPart messageBodyPart = new MimeBodyPart();
-		         messageBodyPart.setText("This is your token have fun!!   "+token);
+		         messageBodyPart.setText("This is your token have fun!!   "+token+"\n Your Password is " + decodedPwd);
 		         Multipart multipart = new MimeMultipart();
 
 		         multipart.addBodyPart(messageBodyPart);
@@ -116,6 +118,21 @@ public class EmailServiceImpl implements EmailService {
 
 		return false;
 
+	}
+	
+	public String  generatePassword()
+	{
+		String chars = "abcdefghijklmnopqrstuvwxyz"
+                + "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                + "0123456789";
+
+		final int PW_LENGTH = 6;
+		Random rnd = new SecureRandom();
+		StringBuilder pass = new StringBuilder();
+		for (int i = 0; i < PW_LENGTH; i++)
+			pass.append(chars.charAt(rnd.nextInt(chars.length())));
+		
+		return pass.toString();		
 	}
 }
 	

@@ -18,5 +18,11 @@
 <body>
 
 	<jsp:include page="navBarExt.jsp"></jsp:include>
+	<div class="btn-group btn-group-justified">
+    <a href="/Sparkys-Bank/viewMyProfile" class="btn btn-default">View</a>
+  	<a href="/Sparkys-Bank/requestEdit" class="btn btn-default">Edit Request</a>
+	<a href="/Sparkys-Bank/transactionReviewRequest" class="btn btn-default">Review Transactions Request</a>
+	<a href="/Sparkys-Bank/AuthorizeProfileView" class="btn btn-default">Authorize Profile View Req</a>
+ </div>
 </body>
 </html>

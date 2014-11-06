@@ -7,13 +7,17 @@
 		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
 	<http use-expressions="true">
-	
+    
 		<intercept-url pattern="/resources/**" access="permitAll"/>
 		<intercept-url pattern="/logout" access="permitAll"/>
 		<intercept-url pattern="/login" access="permitAll"/>
 		<intercept-url pattern="/forgotpassword" access="permitAll"/>
 		<intercept-url pattern="/loginFailed" access="permitAll"/>
 
+		<intercept-url pattern="/viewMyProfile" access="hasAnyRole('ROLE_CUSTOMER','ROLE_MERCHANT')"/>	
+		<intercept-url pattern="/requestEdit" access="hasAnyRole('ROLE_CUSTOMER','ROLE_MERCHANT')"/>	
+		<intercept-url pattern="/transactionReviewRequest" access="hasAnyRole('ROLE_CUSTOMER','ROLE_MERCHANT')"/>	
+		<intercept-url pattern="/AuthorizeProfileView" access="hasAnyRole('ROLE_CUSTOMER','ROLE_MERCHANT')"/>	
 		<intercept-url pattern="/ExtUserProfileViewReq" access="hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')"/>		
 		<intercept-url pattern="/ExtUserRequests" access="hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')"/>		
 		<intercept-url pattern="/home" access="hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE', 'ROLE_MERCHANT', 'ROLE_CUSTOMER')"/>
@@ -50,6 +54,8 @@
 		<intercept-url pattern="/extCustomerHome" access="hasRole('ROLE_CUSTOMER')"/>
 		<intercept-url pattern="/hello" access="permitAll"/>
 		<intercept-url pattern="/403" access="permitAll" />
+		<intercept-url pattern="/otpVerify" access="permitAll" />
+		<intercept-url pattern="/changePassword" access="permitAll" />
 		<intercept-url pattern="/**" access="denyAll" />
 		<form-login login-page="/login" authentication-failure-url="/loginFailed" authentication-success-handler-ref="roleBasedControl"/>
 		<access-denied-handler error-page="/403"/>
@@ -59,6 +65,7 @@
 	<beans:bean id="roleBasedControl" class="com.group10.sparkysbank.service.RoleBasedSecurityService">
 		
 	</beans:bean>
+
 	<authentication-manager>
 		<authentication-provider user-service-ref="loginService">
 		<password-encoder ref="encoder"/>

@@ -12,26 +12,10 @@
 </head>
 <body>
    <jsp:include page="internalHome.jsp"></jsp:include>
-    <form:form class="form-horizontal" commandName="accessInfo" method="post" action="/Sparkys-Bank/EditExtProfile">
-    <fieldset>
-    <legend>Enter User Credentials to Edit Account Details</legend>
-    <div>
-      <div class="col-lg-10">
-           <form:input path="username" class="form-control" id="usernameid" placeholder="User Name" />
-           <label style="color:red">${usernameerror}</label>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="col-lg-10 col-lg-offset-2">
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </div>
-    </div>
-  </fieldset>
-   </form:form>
-   <label style="color:red">${msg}</label>
    <div>
    <h4>Please note that only the Address information is editable</h4>
-	<form:form commandName="accessInfo" action="/Sparkys-Bank/EditExtProfile" method="post">
+   <label style="color:red">${msg}</label>
+<form:form commandName="accessInfo" action="/Sparkys-Bank/requestEdit" method="post">
 		<div class="panel panel-default">
 			<div class="panel-heading">First Name</div>
 			<form:input path="firstname" readonly="true"/>
@@ -49,11 +33,7 @@
 			<form:input path="username" readonly="true"/>
 		</div>
 		<div class="panel panel-default">
-			<div class="panel-heading">Identification ID</div>
-			<form:input path="identificationid" readonly="true"/>
-		</div>
-		<div class="panel panel-default">
-			<div class="panel-heading">Email ID</div>
+			<div class="panel-heading">Modified Email ID</div>
 			<form:input path="email" readonly="true"/>
 		</div>
 		<div class="panel panel-default">
@@ -62,11 +42,7 @@
 			<label style="color:red">${addresserror}</label>
 	   </div>
 	   <input type="submit" value="Update Details" />
-	  </form:form>
-	  <form:form action="/Sparkys-Bank/RejectUpdate" method="post">
-	       <input type="submit" value="Reject Update" />
-	   </form:form>
-   </div>
-   
+  </form:form>
+  </div>
 </body>
 </html>

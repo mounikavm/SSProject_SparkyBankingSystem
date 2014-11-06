@@ -10,6 +10,7 @@ import net.tanesha.recaptcha.ReCaptcha;
 import net.tanesha.recaptcha.ReCaptchaResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +28,7 @@ import com.group10.sparkysbank.model.Userinfo;
 import com.group10.sparkysbank.service.AccountManagerService;
 import com.group10.sparkysbank.service.EmailService;
 import com.group10.sparkysbank.service.PKIService;
+import com.group10.sparkysbank.service.TransactionsService;
 import com.group10.sparkysbank.service.UserService;
 import com.group10.sparkysbank.validator.UserValidator;
 
@@ -47,6 +49,9 @@ public class UserController {
 
 	@Autowired
 	PasswordEncoder encoder;
+	
+	@Autowired
+	TransactionsService transactionsService;
 
 	@Autowired
 	private ReCaptcha recaptcha; 
@@ -102,15 +107,18 @@ public class UserController {
 			return "addExternalUserAccount";
 		}
 		System.out.println(userInfo.getFirstname());
-		String pass=userInfo.getPassword();
-		userInfo.setPassword(encoder.encode(pass));
+		String decodedPwd = emailService.generatePassword();
+		//System.out.println(userInfo.getFirstname());
+		//String pass=userInfo.getPassword();
+		//String pass=userInfo.getPassword();
+		userInfo.setPassword(encoder.encode(decodedPwd));
 
 
 		int accno=userService.addNewExternalUuser(userInfo,que1,que2,ans1,ans2,role);
 		
 		UUID uniqueToken =UUID.randomUUID();
 		pkiService.generateKeyPairAndToken(userInfo.getUsername(),uniqueToken.toString());
-		emailService.sendEmailWithAttachment(userInfo.getEmail(),userInfo.getUsername(),uniqueToken.toString());
+		emailService.sendEmailWithAttachment(userInfo.getEmail(),userInfo.getUsername(),decodedPwd,uniqueToken.toString());
 		model.addAttribute("accno", accno);
 		return "addExternalUserAccount";
 		
@@ -560,5 +568,49 @@ public class UserController {
 	{
 		model.addAttribute("accessInfo", new Userinfo());
 		return "internalHomeTrans";
+	}
+	
+    //Author: Sravya
+	//EXTERNAL USER FUNCTIONALITY
+	@RequestMapping(value="/viewMyProfile",method=RequestMethod.GET)
+	public String viewMyself(Model model)
+	{
+		String username = SecurityContextHolder.getContext()
+				.getAuthentication().getName();
+		Userinfo user = userService.getUserInfobyUserName(username);
+		model.addAttribute("accessInfo", user);
+		return "viewExtInfo";
+	}
+	
+	@RequestMapping(value="/requestEdit",method=RequestMethod.GET)
+	public String editMyself(Model model)
+	{
+		String username = SecurityContextHolder.getContext()
+				.getAuthentication().getName();
+		Userinfo user = userService.getUserInfobyUserName(username);
+		user.setIdentificationid("0");
+		model.addAttribute("accessInfo", user);
+		return "editMyInfo";
+	}
+	
+	@RequestMapping(value="/requestEdit",method=RequestMethod.POST)
+	public String editMyself(@ModelAttribute ("accessInfo") @Validated Userinfo userInfo, BindingResult result, SessionStatus status,Model model)
+	{
+		try
+		{
+		String username = SecurityContextHolder.getContext()
+				.getAuthentication().getName();
+		Userinfo user = userService.getUserInfobyUserName(username);
+		String message= transactionsService.extUsrProfileEditReq(user.getUsername(),userInfo.getAddress());		
+		model.addAttribute("msg", "Request Forwarded it is now pending approval!");
+		model.addAttribute("accessInfo", new Userinfo());
+		return "editMyInfo";
+		}
+		catch(Exception e)
+		{
+			model.addAttribute("msg", "Unable to make the request, you have made a similar request which is pending approval!");
+			model.addAttribute("accessInfo", new Userinfo());
+			return "editMyInfo";
+		}
 	}
 }

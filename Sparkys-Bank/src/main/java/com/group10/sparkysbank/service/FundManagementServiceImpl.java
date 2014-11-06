@@ -2,11 +2,12 @@ package com.group10.sparkysbank.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.group10.sparkysbank.dao.TransactionsDao;
-import com.group10.sparkysbank.model.TransactionTypes;
 import com.group10.sparkysbank.model.Transactions;
 import com.group10.sparkysbank.model.Useraccounts;
 
@@ -29,7 +30,9 @@ public class FundManagementServiceImpl implements FundManagementService{
 		
 		transactions.setTransactionTypes("TR_TRANSFER");
 		
-		String userName = "mou1";
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String userName = auth.getName();
+		System.out.println(userName+" username transfer");
 		Useraccounts fromUserAccounts = accountManagerService.getUserAccountForUserName(userName);
 		transactions.setFromAccount(fromUserAccounts.getAccountno());
 		accountManagerService.updateBalance(fromUserAccounts.getAccountno(), transactions.getAmtInvolved(), "debit");
@@ -51,7 +54,9 @@ public class FundManagementServiceImpl implements FundManagementService{
 		
 		transactions.setTransactionTypes("TR_CREDIT");
 		
-		String userName = "mou1";
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String userName = auth.getName();
+		System.out.println(userName+" username credit");
 		Useraccounts fromUserAccounts = accountManagerService.getUserAccountForUserName(userName);
 		transactions.setFromAccount(fromUserAccounts.getAccountno());
 		
@@ -69,8 +74,9 @@ public class FundManagementServiceImpl implements FundManagementService{
 		transactions.setStatus(1);
 		
 		transactions.setTransactionTypes("TR_DEBIT");
-		
-		String userName = "mou1";
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String userName = auth.getName();
+		System.out.println(userName+" username debit");
 		Useraccounts fromUserAccounts = accountManagerService.getUserAccountForUserName(userName);
 		transactions.setFromAccount(fromUserAccounts.getAccountno());
 		
