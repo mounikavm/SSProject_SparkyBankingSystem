@@ -25,7 +25,7 @@
 			url:"/Sparkys-Bank/verifyMerchant",
 			data:{id: transactionid, merchant:merchant,customertoken:customertoken},
 			success: function(data){
-				$().html(data);
+				window.location.reload();
 			}
 		}
 	);
@@ -61,7 +61,7 @@
 						<td><c:out value="${transaction.merchant}"></c:out></td>
 						<td><c:out value="${transaction.amount}"></c:out></td>
 						<td><input type="text" id="customerToken${status.count}" /></td>
-						<td><a onclick="authenticate(${status.count})">Approve</a></td>
+						<td><a href="" onclick="authenticate(${status.count})">Approve</a></td>
 
 					</tr>
 
@@ -69,7 +69,17 @@
 			</tbody>
 
 		</table>
-		<div id="token"></div>
+		<c:if test="${not empty error}">
+			<div class="alert alert-dismissable alert-danger">
+				Please add customer token.
+			</div>
+		</c:if>
+		
+		<c:if test="${not empty invalid}">
+			<div class="alert alert-dismissable alert-danger">
+			merchant invalid
+			</div>
+		</c:if>
 	</form>
 </body>
 </html>

@@ -123,6 +123,10 @@ public class PKIService {
 	}
 	
 	@Transactional
+	public void updatePKITransaction(PKITransaction transaction){
+		pkiTransactionDAO.updatePayment(transaction);
+	}
+	@Transactional
 	public PKITransaction getTransactionFromTransactionId(Integer transactionId){
 		return pkiTransactionDAO.getTransactionFromTransactionId(transactionId);
 	}

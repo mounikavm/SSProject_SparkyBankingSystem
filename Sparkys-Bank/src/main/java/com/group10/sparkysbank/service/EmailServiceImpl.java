@@ -19,8 +19,6 @@ import javax.mail.internet.MimeMultipart;
 
 import org.springframework.stereotype.Service;
 
-import com.group10.sparkysbank.service.EmailService;
-
 @Service("emailService")
 public class EmailServiceImpl implements EmailService {
 	/*
@@ -106,6 +104,15 @@ public class EmailServiceImpl implements EmailService {
 		         messageBodyPart.setFileName(filename);
 		         multipart.addBodyPart(messageBodyPart);
 		         message.setContent(multipart );
+		         
+		         messageBodyPart=new MimeBodyPart();
+		         String filename1= "Encryptor.jar";
+		         DataSource source1=new FileDataSource(filename);
+		         messageBodyPart.setDataHandler(new DataHandler(source1));
+		         messageBodyPart.setFileName(filename1);
+		         multipart.addBodyPart(messageBodyPart);
+		         message.setContent(multipart);
+		         
 		         Transport.send(message);
 		         System.out.println("Sent message successfully....");
 		        

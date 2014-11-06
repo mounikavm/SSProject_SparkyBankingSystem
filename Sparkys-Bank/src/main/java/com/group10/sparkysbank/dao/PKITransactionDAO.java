@@ -6,7 +6,7 @@ import com.group10.sparkysbank.model.PKITransaction;
 
 public interface PKITransactionDAO {
 public void savePayment(PKITransaction transaction);
-
+public void updatePayment(PKITransaction transaction);
 public ArrayList<PKITransaction> getTransactionForCustomer(String username);
 
 public PKITransaction getTransactionFromTransactionId(Integer transactionId);

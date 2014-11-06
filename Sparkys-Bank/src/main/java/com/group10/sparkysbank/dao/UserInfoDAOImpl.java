@@ -34,12 +34,11 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 		return user;
 	}
 
-	public int registerNewUserAccount(Userinfo userInfo, Useraccounts account,Pwdrecovery sec,UserRoles roles) {
+	public int registerNewUserAccount(Userinfo userInfo, Useraccounts account,UserRoles roles) {
 		Session session=sessionFactory.getCurrentSession();
 	//	session.beginTransaction();
 		session.save(userInfo);
 		session.save(account);
-		session.save(sec);
 		session.save(roles);
 		Criteria criteria=session.createCriteria(Useraccounts.class);
 		criteria.add(Restrictions.eq("username",account.getUsername()));

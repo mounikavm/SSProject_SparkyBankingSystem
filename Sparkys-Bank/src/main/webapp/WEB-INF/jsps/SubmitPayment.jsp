@@ -16,7 +16,7 @@
 </head>
 <body>
 
-
+<jsp:include page="navBarExt.jsp"></jsp:include>
 	<form class="form-horizontal" action="/Sparkys-Bank/paymentSubmitted" method="post">
 		<fieldset>
 			<div style="width: 50%;">
