@@ -2,7 +2,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
-<%@taglib prefix="tags" tagdir="/WEB-INF/tags" %>
+<%@taglib prefix="tags" tagdir="/WEB-INF/tags"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -89,19 +89,11 @@
 						</div>
 
 						<div class="form-group">
-							<label class="col-lg-2 control-label">Identification No</label>
-							<div class="col-lg-10">
-								<form:password path="identificationid" cssClass="form-control" />
-								<form:errors path="identificationid"
-									cssClass="alert alert-dismissable alert-danger"></form:errors>
-							</div>
-						</div>
-							<div class="form-group">
 							<label for="select" class="col-lg-2 control-label">Role</label>
 							<div class="col-lg-10">
 								<select name="role" class="form-control" id="select">
-								<option value="ROLE_CUSTOMER">Customer</option>
-								<option value="ROLE_MERCHANT">Merchant</option>
+									<option value="ROLE_CUSTOMER">Customer</option>
+									<option value="ROLE_MERCHANT">Merchant</option>
 								</select>
 							</div>
 						</div>
@@ -124,18 +116,18 @@
 
 							</div>
 						</c:if>
-                        
-                        <div class="form-group">
+
+						<div class="form-group">
 							<div class="col-lg-10">
-								<tags:captcha privateKey="6Lei9PwSAAAAAIz4E_U0NGrJMbS91HLoafoqBZGi" publicKey="6Lei9PwSAAAAAEpiacERxObNYj1l_DGPRHyTJJxK"></tags:captcha>
+								<tags:captcha
+									privateKey="6Lei9PwSAAAAAIz4E_U0NGrJMbS91HLoafoqBZGi"
+									publicKey="6Lei9PwSAAAAAEpiacERxObNYj1l_DGPRHyTJJxK"></tags:captcha>
 							</div>
 						</div>
 						<c:if test="${not empty captchaerror}">
 							<div style="width: 30%;">
 								<div class="alert alert-dismissable alert-danger">
-									<strong>Invalid captcha value
-
-									</strong>
+									<strong>Invalid captcha value </strong>
 								</div>
 
 							</div>
