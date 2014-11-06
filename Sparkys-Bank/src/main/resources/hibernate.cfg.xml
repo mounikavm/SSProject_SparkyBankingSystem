@@ -18,5 +18,6 @@
   <mapping class="com.group10.sparkysbank.model.Useraccounts"/>
   <mapping class="com.group10.sparkysbank.model.Userinfo"/>
   <mapping class="com.group10.sparkysbank.model.UserRoles"/>
+  <mapping class="com.group10.sparkysbank.model.UserPKI"/>
  </session-factory>
 </hibernate-configuration>

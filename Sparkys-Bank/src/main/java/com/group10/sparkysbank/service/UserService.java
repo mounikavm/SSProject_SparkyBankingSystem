@@ -32,8 +32,8 @@ public class UserService {
 	@Autowired
 	AccountManagerService accountManagerService ;
 	
-	@Transactional
-	public int addNewExternalUuser(Userinfo userInfo,String que1,String que2,String ans1,String ans2)
+	
+	public int addNewExternalUuser(Userinfo userInfo,String que1,String que2,String ans1,String ans2,String role)
 	{
 		
 		Useraccounts account=new Useraccounts();
@@ -48,7 +48,7 @@ public class UserService {
 		pwdRecoveryQuestion.setUsername(userInfo.getUsername());
 		
 		UserRoles roles=new UserRoles();
-		roles.setRole("ROLE_CUSTOMER");
+		roles.setRole(role);
 		roles.setUsername(userInfo.getUsername());
 		
 		return userInfoDAO.registerNewUserAccount(userInfo,account,pwdRecoveryQuestion,roles);
