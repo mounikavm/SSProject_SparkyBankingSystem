@@ -16,15 +16,16 @@
 </head>
 <body>
 <jsp:include page="navBar.jsp"></jsp:include>
-<jsp:include page="managementBar.jsp"></jsp:include>
+<%-- <jsp:include page="managementBar.jsp"></jsp:include> --%>
 <div class="btn-group btn-group-justified">
-    <a href="/Sparkys-Bank/UserAccountManagement" class="btn btn-primary">View</a>
-  	<a href="/Sparkys-Bank/EditExtProfile" class="btn btn-primary">Edit</a>
-  	<!-- <a href="/Sparkys-Bank/UserAccountManagementEdit" class="btn btn-primary">Edit</a> -->
-	<!-- <a href="/Sparkys-Bank/UserAccountManagementDelete" class="btn btn-primary">Delete</a> -->
-	<a href="/Sparkys-Bank/UserAccountManagementActivity" class="btn btn-primary">ReviewTransactions</a>
-	<a href="/Sparkys-Bank/AuthorizeUpdates" class="btn btn-primary">Authorize Request List</a>
-	<a href="/Sparkys-Bank/AuthorizeTransactions" class="btn btn-primary">AuthorizeTransactions</a>
+    <a href="/Sparkys-Bank/UserAccountManagement" class="btn btn-default">View</a>
+  	<a href="/Sparkys-Bank/EditExtProfile" class="btn btn-default">Edit</a>
+  	<!-- <a href="/Sparkys-Bank/UserAccountManagementEdit" class="btn btn-default">Edit</a> -->
+	<!-- <a href="/Sparkys-Bank/UserAccountManagementDelete" class="btn btn-default">Delete</a> -->
+	<a href="/Sparkys-Bank/UserAccountManagementActivity" class="btn btn-default">Review Transactions</a>
+	<a href="/Sparkys-Bank/ExtUserRequests" class="btn btn-default">External User Requests</a>
+	<a href="/Sparkys-Bank/AuthorizeTransactions" class="btn btn-default">Authorize Transactions</a>
+	<a href="/Sparkys-Bank/ExtUserProfileViewReq" class="btn btn-default">Profile View Request</a>
  </div>
 <%-- <a href="<c:url value='/viewTransactions' />" >ViewTransaction</a> --%>
 </body>

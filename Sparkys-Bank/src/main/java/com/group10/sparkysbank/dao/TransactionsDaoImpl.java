@@ -63,14 +63,20 @@ public class TransactionsDaoImpl implements TransactionsDao {
 		return transList;
 	}
 
-	public Set<Transactions> findPendingTransactionList(String accountno) {
+	public List<Transactions> findPendingTransactionList() {
 		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Set<Transactions> findPendingTransactionList() {
-		// TODO Auto-generated method stub
-		return null;
+		Session session=sessionFactory.getCurrentSession();
+		Query query=session.createQuery("from Transactions where approvalNeeded =:approvalneed");
+		query.setParameter("approvalneed", 1);
+		List<Transactions> transList = query.list(); 	
+		List<Transactions> tL = null; 
+		for (Transactions t : transList) {
+			if((t.getTransactionTypes()).equals("TR_VIEW")||(t.getTransactionTypes().equals("TR_VIEWTR")||(t.getTransactionTypes()).contains("TR_EDIT")))
+					{
+				       tL.add(t);
+					}
+		}
+		return tL;
 	}
 	
 	//Check if trans type is TR_VIEW and 
@@ -153,5 +159,49 @@ public class TransactionsDaoImpl implements TransactionsDao {
 		return trans;
 	}
 
+	public List<Transactions> getTransToBeApproved(String role)
+	{
+		Session session=sessionFactory.getCurrentSession();
+		Query query=session.createQuery("from Transactions where transactionTypes=:type and approvalNeeded=:approvalneed");
+		query.setParameter("approvalneed", 1);
+		if(role.equals("ROLE_EMPLOYEE"))
+		  query.setParameter("type", "TR_SEMI");
+		else if(role.equals("ROLE_ADMIN"))
+		  query.setParameter("type", "TR_CRITICAL");
+		else return null;
+		List transList = query.list(); 		
+		return transList;
+	}
+	
+	public List<Transactions> getExtUserReqList(String role)
+	{
+		Session session=sessionFactory.getCurrentSession();
+		Query query=session.createQuery("from Transactions where status=:stat");
+		query.setParameter("stat", 2);
+		//if(role.equals("ROLE_EMPLOYEE"))
+		  //query.setParameter("type", "TR_SEMI");
+		//else if(role.equals("ROLE_ADMIN"))
+		  //query.setParameter("type", "TR_CRITICAL");
+		//else return null;
+		List transList = query.list(); 
+		return transList;
+	}
 
+	public void createViewExtProfileTrans(Transactions transactions)
+			throws Exception {
+		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().save(transactions);
+	}
+
+	public int countOfReqForAcc(String type, int accno)
+	{
+		Session session=sessionFactory.getCurrentSession();
+		Query query=session.createQuery("from Transactions where transactionTypes=:type and status<:stat and fromAccount=:accno");
+		query.setParameter("stat", 3);
+		query.setParameter("type", type);
+		query.setParameter("accno", accno);
+		List<Transactions> transList = query.list(); 	
+		int count = transList.size();
+		return count;
+	}
 }

@@ -23,7 +23,7 @@
 		</div>
 		<div class="navbar-collapse collapse navbar-inverse-collapse">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="#">Home</a></li>
+				<li class="active"><a href="/Sparkys-Bank/home">Home</a></li>
 				<sec:authorize ifAnyGranted="ROLE_ADMIN"><li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown">Admin Specific Account Management<b class="caret"></b></a>
 					<ul class="dropdown-menu">

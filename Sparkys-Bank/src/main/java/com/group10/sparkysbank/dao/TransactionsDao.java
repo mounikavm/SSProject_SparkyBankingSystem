@@ -15,9 +15,13 @@ public interface TransactionsDao {
 	
 	public Transactions findTransactionByID(int idtransactions);
 	public List<Transactions> findTransactionListByAccountno(int accountno);
-	public Set<Transactions> findPendingTransactionList(String accountno);
-	public Set<Transactions> findPendingTransactionList();
+	public List<Transactions> findPendingTransactionList();
 	public Transactions findViewableOrNot(int accno);
 	public Transactions findEditableOrNot(int accno);
 	public Transactions findTransViewableOrNot(int accno);
+	public List<Transactions> getTransToBeApproved(String role);
+	public Transactions updateTrans(Transactions trans);
+	public List<Transactions> getExtUserReqList(String role);
+	public void createViewExtProfileTrans(Transactions transactions)throws Exception;
+	public int countOfReqForAcc(String type, int accno);
 }

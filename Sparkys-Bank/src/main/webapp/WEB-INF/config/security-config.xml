@@ -13,7 +13,13 @@
 		<intercept-url pattern="/login" access="permitAll"/>
 		<intercept-url pattern="/forgotpassword" access="permitAll"/>
 		<intercept-url pattern="/loginFailed" access="permitAll"/>
-		
+
+		<intercept-url pattern="/ExtUserProfileViewReq" access="hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')"/>		
+		<intercept-url pattern="/ExtUserRequests" access="hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')"/>		
+		<intercept-url pattern="/home" access="hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE', 'ROLE_MERCHANT', 'ROLE_CUSTOMER')"/>
+		<intercept-url pattern="/transApprove" access="hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')"/>
+		<intercept-url pattern="/transReject" access="hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')"/>
+		<intercept-url pattern="/AuthorizeTransactions" access="hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')"/>
 		<intercept-url pattern="/EditExtProfile" access="hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')"/>
 		<intercept-url pattern="/RejectUpdate" access="hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')"/>
 		<intercept-url pattern="/ViewEmpProfile" access="hasRole('ROLE_ADMIN')"/>

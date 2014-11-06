@@ -530,7 +530,7 @@ public class UserController {
 		else
 		{
 			model.addAttribute("usernameerror","Please enter the username");
-			return "viewEmpProfile";
+			return "deleteEmpProfile";
 		}
 			
 
