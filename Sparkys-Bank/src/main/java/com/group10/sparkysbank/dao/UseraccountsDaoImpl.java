@@ -23,7 +23,7 @@ public class UseraccountsDaoImpl implements UseraccountsDao {
 		
 		if(useraccountsList.get(0) == null)
 			throw new Exception("No accounts for this user!");
-		
+		System.out.println(useraccountsList.get(0).getAccountno());
 		return useraccountsList.get(0);
 		
 		

@@ -6,4 +6,5 @@ public interface AccountManagerService {
 
 	public Useraccounts getUserAccountForUserName(String userName) throws Exception;
 	public void updateBalance(Integer accountNo, double amount, String type) throws Exception;
+	public Useraccounts getUserNameForAccount(int accountno) throws Exception;
 }

@@ -11,7 +11,7 @@
 <title>View My Profile</title>
 </head>
 <body>
-   <jsp:include page="internalHome.jsp"></jsp:include>
+   <jsp:include page="hello.jsp"></jsp:include>
    <h3>This is your profile!</h3>
    <div>
 		<div class="panel panel-default">

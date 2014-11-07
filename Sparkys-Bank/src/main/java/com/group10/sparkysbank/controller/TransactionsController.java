@@ -220,15 +220,23 @@ public class TransactionsController {
 				.getAuthentication().getName();
 		String ur = userService.getUserRoleType(username);
 		List<Transactions> transL = transactionsService.getExtUserReqList(ur);
+		Useraccounts ua = null;
 		if (transL != null) {
 			for (Transactions t : transL) {
 				System.out.println(t.getTransactionTypes());
 				if (t.getTransactionTypes().contains("TR_EDIT"))
 					t.setTransactionTypes("EDIT APPROVAL REQUEST");
-				else if (t.getTransactionTypes().contains("TR_VIEW"))
+				else if (t.getTransactionTypes().equals("TR_VIEW"))
 					t.setTransactionTypes("VIEW USER PROFILE REQUEST APPROVED");
-				else if (t.getTransactionTypes().contains("TR_VIEWTR"))
+				else if (t.getTransactionTypes().equals("TR_VIEWTR"))
 					t.setTransactionTypes("REQUEST TO REVIEW TRANSACTIONS");
+				try {
+					ua = accountManagerService.getUserNameForAccount(t.getFromAccount());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				t.setCreditDebit(ua.getUsername());
 			}
 		}
 		model.addAttribute("transList", transL);
@@ -293,4 +301,113 @@ public class TransactionsController {
 		return "reqProfileViewAccess";
 	}
 	
+	@RequestMapping(value = "/transactionReviewRequest", method = RequestMethod.GET)
+	public String reqTransReview(Model model) {
+		//add objects to model
+		model.addAttribute("accessInfo", new Userinfo());
+		model.addAttribute("Message", null);
+		//validate input format
+		return "transReviewReq";
+	} 
+	
+	@RequestMapping(value = "/transactionReviewRequest", method = RequestMethod.POST)
+	public String reqTransReview(@ModelAttribute ("accessInfo") @Validated Userinfo userInfo,
+			BindingResult result, SessionStatus status, Model model) {
+		//add objects to model
+		model.addAttribute("accessInfo", userInfo);
+		model.addAttribute("Message", null);
+		//validate input format
+		String username = SecurityContextHolder.getContext()
+				.getAuthentication().getName();
+		String ur = userService.getUserRoleType(username);
+		if(ur.equals("ROLE_CUSTOMER")||ur.equals("ROLE_MERCHANT"))
+		{
+			String message= transactionsService.extUsrTransReviewReq(username);
+			model.addAttribute("Message",message);
+		}
+		else
+		{
+			model.addAttribute("Message", "Not a valid employee");
+			return "transReviewReq";
+		}
+		return "transReviewReq";
+	} 
+	
+	// A List of view profile requests to be authorized
+	@RequestMapping(value = "/AuthorizeProfileView", method = RequestMethod.GET)
+	public String authorizeViewProfileList(Model model) {
+		String username = SecurityContextHolder.getContext()
+				.getAuthentication().getName();
+		String ur = userService.getUserRoleType(username);
+		List<Transactions> transL =null;
+		try
+		{
+		transL = transactionsService
+				.getViewProfileReqApproved(ur);
+		model.addAttribute("transList", transL);		
+		}
+		catch(Exception e)
+		{
+			model.addAttribute("transList", transL);
+			return "approveProfileViews";
+		}
+		model.addAttribute("trans", new Transactions());
+		return "approveProfileViews";
+	}
+	
+	@RequestMapping(value = "/transApproveViewProfile", method = RequestMethod.POST)
+	public String approveTransView(@ModelAttribute("trans") Transactions tr,
+			BindingResult result, SessionStatus status, Model model) {
+		Transactions transaction = transactionsService.viewTransaction(tr
+				.getIdtransactions());
+		transaction.setApprovalNeeded(0);
+		transaction.setApproved(1);
+		transaction.setStatus(3);
+		transactionsService.updateTrans(transaction);
+		String username = SecurityContextHolder.getContext()
+				.getAuthentication().getName();
+		String ur = userService.getUserRoleType(username);
+		List<Transactions> transL =null;
+		try
+		{
+		transL = transactionsService
+				.getViewProfileReqApproved(ur);
+		model.addAttribute("transList", transL);		
+		}
+		catch(Exception e)
+		{
+			model.addAttribute("transList", transL);
+			return "approveProfileViews";
+		}
+		model.addAttribute("trans", new Transactions());
+		return "approveProfileViews";
+	}
+
+	@RequestMapping(value = "/transRejectViewProfile", method = RequestMethod.POST)
+	public String rejectTransView(@ModelAttribute("trans") Transactions tr,
+			BindingResult result, SessionStatus status, Model model) {
+		Transactions transaction = transactionsService.viewTransaction(tr
+				.getIdtransactions());
+		transaction.setApprovalNeeded(0);
+		transaction.setApproved(0);
+		transaction.setStatus(2);
+		transactionsService.updateTrans(transaction);
+		String username = SecurityContextHolder.getContext()
+				.getAuthentication().getName();
+		String ur = userService.getUserRoleType(username);
+		List<Transactions> transL =null;
+		try
+		{
+		transL = transactionsService
+				.getViewProfileReqApproved(ur);
+		model.addAttribute("transList", transL);		
+		}
+		catch(Exception e)
+		{
+			model.addAttribute("transList", transL);
+			return "approveProfileViews";
+		}
+		model.addAttribute("trans", new Transactions());
+		return "approveProfileViews";
+	}
 }

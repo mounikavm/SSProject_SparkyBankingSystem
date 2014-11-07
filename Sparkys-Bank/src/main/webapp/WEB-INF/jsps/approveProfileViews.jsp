@@ -8,24 +8,37 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>External User Requests List</title>
+<title>Authorize Transactions</title>
 </head>
 <body>
-   <jsp:include page="internalHome.jsp"></jsp:include>
+   <jsp:include page="hello.jsp"></jsp:include>
    <div>
 		<table class="table table-striped table-hover ">
 			<thead>
+			    <tr>
+					<th>Approve or Reject the request to view your profile</th>
+				</tr>
 				<tr>
-					<th>User name</th>
-					<th>Transaction Type</th>
+					<th>Approve</th>
+					<th>Reject</th>
 				</tr>
 			</thead>
 			<c:if test="${not empty transList}">
 			<tbody>
 			<c:forEach items="${transList}" var="i">
 				<tr>
-					<td><c:out value="${i.creditDebit}"/></td>
-					<td><c:out value="${i.transactionTypes}"/></td>
+					<td>
+					   <form:form action="transApprove" method="post" commandName="trans">
+					      <form:input type="hidden" value="${i.idtransactions}" path="idtransactions"/>
+					      <input type="submit" value="Approve" />
+					   </form:form>
+					</td>
+					<td>
+					   <form:form action="transReject" method="post" commandName="trans">
+					      <form:input type="hidden" value="${i.idtransactions}" path="idtransactions"/>
+					      <input type="submit" value="Reject" />
+					   </form:form>
+				    </td>
 				</tr>
 			</c:forEach>
 			</tbody>

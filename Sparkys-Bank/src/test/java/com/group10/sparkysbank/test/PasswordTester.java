@@ -12,7 +12,7 @@ public class PasswordTester extends TestCase {
 	public void testPasswordGenerator()
 	{
 		BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
-		String password=encoder.encode("secret");
+		String password=encoder.encode("Secret1");
 		System.out.println(password);
 	}
 	

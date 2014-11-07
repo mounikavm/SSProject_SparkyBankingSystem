@@ -46,5 +46,15 @@ public class AccountManagerServiceImpl implements AccountManagerService {
 		useraccountsDao.updateBalance(useraccounts);
 			
 	}
+	
+	@Transactional
+	public Useraccounts getUserNameForAccount(int accountno)
+			throws Exception {
+		// TODO Auto-generated method stub
+		
+		Useraccounts useraccounts=useraccountsDao.getUserAccount(accountno);
+		
+		return useraccounts;
+	}
 
 }

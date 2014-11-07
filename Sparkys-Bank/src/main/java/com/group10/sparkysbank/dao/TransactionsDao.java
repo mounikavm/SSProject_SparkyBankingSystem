@@ -25,4 +25,6 @@ public interface TransactionsDao {
 	public void createViewExtProfileTrans(Transactions transactions)throws Exception;
 	public int countOfReqForAcc(String type, int accno);
 	public int countOfReq(String type, int accno);
+	public int countOfReqTrans(String type, int accno);
+	public List<Transactions> getViewProfileReqApproved(int accno);
 }

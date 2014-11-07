@@ -74,7 +74,7 @@ public class TransactionsService {
 			e.printStackTrace();
 		}
 		if(count!=0)
-			message="A pending view request already exits. You can directly go ahead and view the proile.";
+			message="A pending view request already exits. Please wait till approved.";
 		else {
 			if (accno != 0) {
 				transaction.setFromAccount(accno);
@@ -123,6 +123,57 @@ public class TransactionsService {
 			}
 		}
 		return message;
+	}
+	
+	//extUsrTransReviewReq
+	@Transactional
+	public String extUsrTransReviewReq(String username)
+	{
+		String message = "No Action could be taken";
+		Transactions transaction = new Transactions();
+		transaction.setApprovalNeeded(1);
+		transaction.setStatus(2);
+		transaction.setTransactionTypes("TR_VIEWTR");
+		int accno = 0;
+		int count = -1;
+		try {
+			accno = (useraccountsDAO.getAccountByUsername(username)).getAccountno();
+			//check if any other record exists with the same account no
+			count = transactionsDAO.countOfReqTrans("TR_VIEWTR",accno);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(count!=0)
+			message="A pending request already exits. Please wait till it is considered.";
+		else {
+			if (accno != 0) {
+				transaction.setFromAccount(accno);
+				try {
+					transactionsDAO.createViewExtProfileTrans(transaction);
+					message = "Request forwarded. Please wait till approved.";
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+message);
+		return message;
+	}
+	
+	//getViewProfileReqApproved
+	@Transactional
+	public List<Transactions> getViewProfileReqApproved(String username)
+	{
+		 int accno=0;
+		try {
+			accno = (useraccountsDAO.getAccountByUsername(username)).getAccountno();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+         return this.transactionsDAO.getViewProfileReqApproved(accno);
 	}
 	
 	@Transactional

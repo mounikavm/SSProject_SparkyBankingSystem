@@ -120,22 +120,19 @@ public class TransactionsDaoImpl implements TransactionsDao {
 	public Transactions findEditableOrNot(int accno)
 	{
 		Session session=sessionFactory.getCurrentSession();
-		//session.beginTransaction();
-		Criteria criteria=session.createCriteria(Transactions.class);
-		criteria.add(Restrictions.eq("fromAccount", accno));
-		//criteria.add(Restrictions.eq("transactionTypes", "TR_EDIT"));
-		criteria.add(Restrictions.eq("status", 2));
-		criteria.add(Restrictions.eq("approvalNeeded", 1));
-		Transactions trans=(Transactions)criteria.uniqueResult();
+		Query query=session.createQuery("from Transactions where fromAccount =:ano and status =:statusno");
+		query.setParameter("ano", accno);
+		query.setParameter("statusno", 2);
+		List<Transactions> transList = query.list(); 
+		Transactions trans = null;
+		for (Transactions t : transList) {
+			if(t.getTransactionTypes().contains("TR_EDIT"))
+			   trans = t;
+		}
 		if(trans!=null)
 		{
-			if(!(trans.getTransactionTypes().contains("TR_EDIT")))
-				trans=null;
-			else
-			{
-				trans.setStatus(3);
-				trans=updateTrans(trans);
-			}
+			trans.setStatus(3);
+			trans=updateTrans(trans);
 		}
 		return trans;
 	}
@@ -213,7 +210,8 @@ public class TransactionsDaoImpl implements TransactionsDao {
 		query.setParameter("accno", accno);
 		List<Transactions> transList = query.list(); 
 		List<Transactions> tL = null;
-		if(transList.size()!=0)
+		int count =0;
+		if(transList!=null)
 		{
 		for (Transactions t : transList) {
 			if((t.getTransactionTypes()).contains(type))
@@ -221,8 +219,34 @@ public class TransactionsDaoImpl implements TransactionsDao {
 				tL.add(t);
 			}
 		}
+		if(tL!=null)
+		  count = tL.size();
 		}
-		int count = tL.size();
 		return count;
+	}
+	
+	public int countOfReqTrans(String type, int accno)
+	{
+		Session session=sessionFactory.getCurrentSession();
+		Query query=session.createQuery("from Transactions where transactionTypes=:types and status=:stat and fromAccount=:accno");
+		query.setParameter("stat", 2);
+		query.setParameter("accno", accno);
+		query.setParameter("types", type);
+		List<Transactions> transList = query.list(); 
+		int count = transList.size();
+		System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"+ count);
+		return count;
+	}
+	
+	public List<Transactions> getViewProfileReqApproved(int accno)
+	{
+		Session session=sessionFactory.getCurrentSession();
+		Query query=session.createQuery("from Transactions where transactionTypes=:types and status=:stat and fromAccount=:accno");
+		query.setParameter("stat", 1);
+		query.setParameter("accno", accno);
+		query.setParameter("types", "TR_VIEW");
+		List<Transactions> transList = query.list(); 
+		return transList;
+
 	}
 }

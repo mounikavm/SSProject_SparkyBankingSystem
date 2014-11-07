@@ -8,30 +8,18 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>External User Requests List</title>
+<title>Edit Employee Profile</title>
 </head>
 <body>
-   <jsp:include page="internalHome.jsp"></jsp:include>
+   <jsp:include page="hello.jsp"></jsp:include>
    <div>
-		<table class="table table-striped table-hover ">
-			<thead>
-				<tr>
-					<th>User name</th>
-					<th>Transaction Type</th>
-				</tr>
-			</thead>
-			<c:if test="${not empty transList}">
-			<tbody>
-			<c:forEach items="${transList}" var="i">
-				<tr>
-					<td><c:out value="${i.creditDebit}"/></td>
-					<td><c:out value="${i.transactionTypes}"/></td>
-				</tr>
-			</c:forEach>
-			</tbody>
-			</c:if>
-		</table>
-	</div>
-   
+<form:form commandName="accessInfo" action="transactionReviewRequest" method="post">
+		<div class="panel panel-default">
+			<div class="panel-heading">Click request transaction review button to initiate review of recent transactions</div>
+			<label style="color:red">${Message}</label>
+		</div>
+	   <input type="submit" value="Request Transactions Review" />
+</form:form>
+  </div>
 </body>
 </html>

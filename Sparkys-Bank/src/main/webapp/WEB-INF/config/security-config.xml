@@ -14,6 +14,8 @@
 		<intercept-url pattern="/forgotpassword" access="permitAll"/>
 		<intercept-url pattern="/loginFailed" access="permitAll"/>
 
+        <intercept-url pattern="/transRejectViewProfile" access="hasAnyRole('ROLE_CUSTOMER','ROLE_MERCHANT')"/>	
+        <intercept-url pattern="/transApproveViewProfile" access="hasAnyRole('ROLE_CUSTOMER','ROLE_MERCHANT')"/>	
 		<intercept-url pattern="/viewMyProfile" access="hasAnyRole('ROLE_CUSTOMER','ROLE_MERCHANT')"/>	
 		<intercept-url pattern="/requestEdit" access="hasAnyRole('ROLE_CUSTOMER','ROLE_MERCHANT')"/>	
 		<intercept-url pattern="/transactionReviewRequest" access="hasAnyRole('ROLE_CUSTOMER','ROLE_MERCHANT')"/>	

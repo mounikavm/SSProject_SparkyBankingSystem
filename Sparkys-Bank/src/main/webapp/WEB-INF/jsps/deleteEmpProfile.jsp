@@ -60,7 +60,7 @@
 			<div class="panel-heading">Address</div>
 			<form:input path="address" readonly="true"/>
 	   </div>
-	   <input type="submit" value="Update Details" />
+	   <input type="submit" value="Delete Employee" />
 	  </form:form>
    </div>
    

@@ -14,7 +14,7 @@
    <jsp:include page="internalHome.jsp"></jsp:include>
       <form:form class="form-horizontal" commandName="accessInfo" method="post" action="/Sparkys-Bank/UserAccountManagementActivity">
     <fieldset>
-    <legend>Enter User Credentials to Edit Account Details</legend>
+    <legend>Enter User Credentials to Review Transactions Details</legend>
     <div>
       <div class="col-lg-10">
            <form:input path="username" class="form-control" id="usernameid" placeholder="User Name" />
@@ -32,21 +32,15 @@
 		<table class="table table-striped table-hover ">
 			<thead>
 				<tr>
-					<th>#</th>
 					<th>Amount Involved</th>
 					<th>Transaction Type</th>
-					<th>To Account</th>
-					<th>Approved</th>
 				</tr>
 			</thead>
 			<c:if test="${not empty transList}">
 			<tbody>
 			<c:forEach items="${transList}" var="i">
 				<tr>
-					<td>1</td>
 					<td><c:out value="${i.amtInvolved}"/></td>
-					<td><c:out value="${i.toAccountno}"/></td>
-					<td><c:out value="${i.status}"/></td>
 					<td><c:out value="${i.transactionTypes}"/></td>
 				</tr>
 			</c:forEach>

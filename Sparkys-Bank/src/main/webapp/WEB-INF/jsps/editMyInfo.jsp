@@ -11,11 +11,11 @@
 <title>Edit Employee Profile</title>
 </head>
 <body>
-   <jsp:include page="internalHome.jsp"></jsp:include>
+   <jsp:include page="hello.jsp"></jsp:include>
    <div>
    <h4>Please note that only the Address information is editable</h4>
    <label style="color:red">${msg}</label>
-<form:form commandName="accessInfo" action="/Sparkys-Bank/requestEdit" method="post">
+<form:form commandName="accessInfo" action="requestEdit" method="post">
 		<div class="panel panel-default">
 			<div class="panel-heading">First Name</div>
 			<form:input path="firstname" readonly="true"/>

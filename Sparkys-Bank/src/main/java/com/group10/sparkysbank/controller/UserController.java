@@ -520,6 +520,7 @@ public class UserController {
 						{
 						   userService.deleteUserInfo(ui);
 						   model.addAttribute("deleteMessage","Delete Successfull!");
+						   model.addAttribute("accessInfo", new Userinfo());
 						   return "deleteEmpProfile";
 						}
 					//check if the user is an external user
@@ -587,7 +588,7 @@ public class UserController {
 				.getAuthentication().getName();
 		Userinfo user = userService.getUserInfobyUserName(username);
 		String message= transactionsService.extUsrProfileEditReq(user.getUsername(),userInfo.getAddress());		
-		model.addAttribute("msg", "Request Forwarded it is now pending approval!");
+		model.addAttribute("msg", message);
 		model.addAttribute("accessInfo", new Userinfo());
 		return "editMyInfo";
 		}
