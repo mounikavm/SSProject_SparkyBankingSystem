@@ -69,7 +69,7 @@ public class UserController {
 	@RequestMapping(value="/addExtUser",method=RequestMethod.POST)
 	public String submitForm(ModelMap model, @ModelAttribute ("extUser") @Validated Userinfo userInfo, BindingResult result, SessionStatus status, HttpServletRequest request, HttpServletResponse response,ServletRequest servletRequest) throws Exception
 	{
-		System.out.println("hello");
+		/*System.out.println("hello");
 		String challangeField=request.getParameter("recaptcha_challenge_field").toString();
 		String responseField=request.getParameter("recaptcha_response_field").toString();
 		System.out.println("Secret="+challangeField);
@@ -81,7 +81,7 @@ public class UserController {
 			model.addAttribute("captchaerror", "captchaerror");
 			result.addError(new ObjectError("", "captchaerror"));
 			return "addExternalUserAccount";
-		}
+		}*/
 
 
 		String role=request.getParameter("role").toString();

@@ -117,21 +117,7 @@
 							</div>
 						</c:if>
 
-						<div class="form-group">
-							<div class="col-lg-10">
-								<tags:captcha
-									privateKey="6Lei9PwSAAAAAIz4E_U0NGrJMbS91HLoafoqBZGi"
-									publicKey="6Lei9PwSAAAAAEpiacERxObNYj1l_DGPRHyTJJxK"></tags:captcha>
-							</div>
-						</div>
-						<c:if test="${not empty captchaerror}">
-							<div style="width: 30%;">
-								<div class="alert alert-dismissable alert-danger">
-									<strong>Invalid captcha value </strong>
-								</div>
-
-							</div>
-						</c:if>
+				
 
 						<div class="form-group">
 							<div class="col-lg-10 col-lg-offset-2">
