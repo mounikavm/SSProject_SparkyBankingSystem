@@ -39,7 +39,17 @@ public class Userinfo implements java.io.Serializable {
 	private String address;
 	private String identificationid;
 	private String email;
+	private boolean enable;
 	
+	@Column(name="enable")
+	public boolean isEnable() {
+		return enable;
+	}
+
+	public void setEnable(boolean enable) {
+		this.enable = enable;
+	}
+
 	public Userinfo() {
 	}
 
@@ -49,7 +59,7 @@ public class Userinfo implements java.io.Serializable {
 
 	public Userinfo(int iduserinfo, String firstname, String middlename,
 			String lastname, String username, String password,
-			String address, String identificationid,String email) {
+			String address, String identificationid,String email,boolean enable) {
 		this.iduserinfo = iduserinfo;
 		this.firstname = firstname;
 		this.middlename = middlename;
@@ -59,7 +69,7 @@ public class Userinfo implements java.io.Serializable {
 		this.address = address;
 		this.identificationid = identificationid;
 		this.email=email;
-		
+		this.enable=enable;
 	}
 
 	@Id

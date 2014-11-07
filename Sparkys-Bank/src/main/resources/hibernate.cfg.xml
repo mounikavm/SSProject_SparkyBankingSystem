@@ -21,6 +21,7 @@
   <mapping class="com.group10.sparkysbank.model.UserPKI"/>
   <mapping class="com.group10.sparkysbank.model.PKITransaction"/>
   <mapping class="com.group10.sparkysbank.model.OneTimePad"/>
+  <mapping class="com.group10.sparkysbank.model.UserPII"/>
   
  </session-factory>
 </hibernate-configuration>

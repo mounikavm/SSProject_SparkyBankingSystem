@@ -51,10 +51,7 @@ public class UserValidator implements Validator {
 			arg1.rejectValue("username", "Userinfo.username");
 		}
 			
-		if(!identificationId.matches("^[0-9]{9}$"))
-		{
-			arg1.rejectValue("identificationid", "Userinfo.identificationId");
-		}
+		
 		System.out.println("in validator");
 	}
 

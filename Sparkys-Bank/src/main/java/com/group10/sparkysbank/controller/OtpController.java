@@ -48,29 +48,43 @@ public class OtpController {
 		ModelAndView model = null;
 		try
 		{
-		String password = (String)request.getParameter("newPassword");
-		String confirmPassword = (String)request.getParameter("confirmPassword");
-		System.out.println("pass="+password);
-		System.out.println("pass="+confirmPassword);
-		if(!password.equals(confirmPassword))
-			throw new Exception("Passwords do not match!");
-			
-		
-		 model= new ModelAndView("userLogin");
-		String userName=(String)session.getAttribute("username");
-		userService.changePassword(confirmPassword, userName);
-		
-		System.out.println("in oneTimePad controller");
-		SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
-		
-		return model;
+			String password = (String)request.getParameter("newPassword");
+			String confirmPassword = (String)request.getParameter("confirmPassword");
+			System.out.println("pass="+password);
+			System.out.println("pass="+confirmPassword);
+			if(!password.equals(confirmPassword))
+				throw new Exception("Passwords do not match!");
+			String userName="";	
+
+			model= new ModelAndView("userLogin");
+			if(session.getAttribute("type")!=null && session.getAttribute("type").equals("forgotpassword"))
+			{	 userName=(String)session.getAttribute("username");
+			userService.changePassword(confirmPassword, userName);
+			model=new ModelAndView("userLogin");
+			System.out.println("in oneTimePad controller");
+			SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
+
+
+			}
+			else
+			{ 
+
+				userName=SecurityContextHolder.getContext().getAuthentication().getName();
+				userService.changePassword(confirmPassword, userName);
+				userService.enableUser(userName);
+				model=new ModelAndView("changePII");
+			}
+			return model;
+
+
+
 		}
 		catch(Exception e)
 		{
 			model = new ModelAndView("changePassword");
 			model.addObject("errorMessage", e.getMessage());
 			return model;
-			
+
 		}
 
 	}
@@ -78,12 +92,12 @@ public class OtpController {
 	//Gets the key entered by the user and verifies it
 	@RequestMapping(value = "/otpVerify", method = RequestMethod.POST)
 	public ModelAndView otpVerify(@ModelAttribute("otpVerify") OneTimePad otpVerify,BindingResult result,@RequestParam("enteredkey") String enteredkey, ModelMap map,HttpSession session) {
-		
+
 		ModelAndView model;
 		model = new ModelAndView("otpVerify");
 		try 
 		{
-		        //verification
+			//verification
 			if (otpService.otpVerify(enteredkey,session.getAttribute("username").toString()))
 			{
 				model = new ModelAndView("hello");

@@ -17,3 +17,4 @@ public class PasswordTester extends TestCase {
 	}
 	
 }
+
