@@ -61,7 +61,7 @@ public class TransactionsService {
 		String message = "No Action could be taken";
 		Transactions transaction = new Transactions();
 		transaction.setApprovalNeeded(1);
-		transaction.setStatus(1);
+		transaction.setStatus(2);
 		transaction.setTransactionTypes("TR_VIEW");
 		int accno = 0;
 		int count = -1;
